@@ -1,0 +1,12 @@
+# Ignore build files
+dist
+# Dependency directory
+node_modules
+
+# IDE
+.vscode
+.idea
+# Logs
+logs
+*.log
+.DS_Store
