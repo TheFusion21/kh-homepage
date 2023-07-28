@@ -4,6 +4,7 @@
   "description": "The Wesbite of Kay Hennig",
   "main": "index.js",
   "repository": "https://github.com/TheFusion21/kh-homepage",
+  "homepage": "https://thefusion21.github.io/kh-homepage/",
   "author": "Kay Hennig",
   "private": true,
   "devDependencies": {
@@ -54,6 +55,11 @@
     "lint": "eslint './src/**/*.{js,ts,tsx}' --quiet",
     "dev": "yarn run start-dev",
     "start-dev": "webpack serve --config=configs/webpack/dev.js",
-    "start-prod": "yarn run build && node express.js"
+    "start-prod": "yarn run build && node express.js",
+    "deploy": "gh-pages -d dist",
+    "predeploy": "yarn run build"
+  },
+  "dependencies": {
+    "gh-pages": "^5.0.0"
   }
 }
