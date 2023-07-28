@@ -2,5 +2,7 @@
   "start_url": ".",
   "display": "standalone",
   "name": "Kay Hennig Homepage",
-  "short_name": "KH Homepage"
+  "short_name": "KH Homepage",
+  "background": "#fff",
+  "description": "The personal homepage/portfolio of Kay Hennig"
 }

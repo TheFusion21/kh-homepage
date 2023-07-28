@@ -34,6 +34,7 @@ const App = () => {
   
   useEffect(() => {
     if (debouncedSearch) {
+      setGpsEnabled(false);
       geo(debouncedSearch).then((res) => {
         if (typeof res === typeof []) {
           setSearchResults(res);
@@ -45,14 +46,19 @@ const App = () => {
   }, [debouncedSearch]);
 
   useEffect(() => {
-    if (location) {
-      getWeather(location.lat, location.lon).then((res) => {
-        if (res.cod === 200) {
-          setWeather(res);
-        }
-      });
-      setSearchResults([]);
-    }
+    const getWeatherData = () => {
+      if (location) {
+        getWeather(location.lat, location.lon).then((res) => {
+          if (res.cod === 200) {
+            setWeather(res);
+          }
+        });
+        setSearchResults([]);
+      }
+    };
+    getWeatherData();
+    const interval = setInterval(getWeatherData, 30000);
+    return () => clearInterval(interval);
   }, [location]);
 
   useEffect(() => {
@@ -62,6 +68,8 @@ const App = () => {
           lat: pos.coords.latitude,
           lon: pos.coords.longitude,
         });
+      }, (err) => {
+        setGpsEnabled(false);
       });
     } else {
       setLocation(null);
@@ -109,7 +117,7 @@ const App = () => {
   }, [weather]);
 
   return (
-    <div className="bg-gradient-to-b from-sky-500 to-sky-300 dark:from-sky-900 dark:to-sky-700 w-screen h-screen">
+    <div className="bg-gradient-to-b from-sky-500 to-sky-300 dark:from-sky-900 dark:to-sky-700 w-screen min-h-screen relative">
       {/* Searchbar */}
       <div className="sm:fixed flex flex-col items-center w-full top-0">
         <div className="w-full flex flex-col justify-center items-center sm:w-max sm:my-2 bg-white dark:bg-zinc-800 dark:text-zinc-200 sm:rounded-md shadow-md">
@@ -117,7 +125,7 @@ const App = () => {
             <input
               type="text"
               placeholder="Search"
-              className="bg-transparent border-0 outline-none text-lg grow sm:w-[16rem]"
+              className="bg-transparent border-0 outline-none text-lg grow w-full sm:w-[16rem]"
               value={search}
               onChange={(e) => setSearch(e.target.value)}
             />
@@ -138,7 +146,7 @@ const App = () => {
         </div>
       </div>
       {weather && (
-        <div className="grid grid-cols-2 gap-4 px-4 sm:grid-cols-3 sm:mx-32 md:mx-48 xl:mx-96 sm:mt-16">
+        <div className="grid grid-cols-2 gap-4 mx-8 sm:grid-cols-3 sm:mx-32 md:mx-48 xl:mx-96 sm:pt-16">
           <div className="col-span-full flex flex-col justify-center items-center">
             <img src={iconUrl(weather.weather[0].icon)} alt="Weather Icon" className="h-48" />
             <span className="uppercase dark:text-zinc-200 text-lg font-semibold">
@@ -218,6 +226,12 @@ const App = () => {
           )}
         </div> 
       )}
+      <div className="py-10" />
+      <div className="absolute bottom-0 w-full text-center pt-8 pb-2 dark:text-zinc-200">
+        <span>
+          Data provided by <a href="https://openweathermap.org/" target="_blank" rel="noreferrer" className="dark:text-sky-300">OpenWeather</a>
+        </span>
+      </div>
     </div>
   )
 };
