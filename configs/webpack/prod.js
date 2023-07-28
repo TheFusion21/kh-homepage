@@ -6,13 +6,9 @@ const commonConfig = require("./common");
 module.exports = merge(commonConfig, {
   mode: "production",
   output: {
-    filename: "js/bundle.[contenthash].min.js",
+    filename: "js/[name].[contenthash].min.js",
     path: Path.resolve(__dirname, "../../dist"),
-    publicPath: "/",
+    publicPath: "/kh-homepage/",
   },
   devtool: "source-map",
-  externals: {
-    react: "React",
-    "react-dom": "ReactDOM",
-  },
 });

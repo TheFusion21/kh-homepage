@@ -1,4 +1,4 @@
-const key = 'e555f9b6dc6d4ce4a766711203569791';
+const key = '545d3c077ff361e15a8a41a89c5321e3';
 
 export interface Weather {
   base: string;

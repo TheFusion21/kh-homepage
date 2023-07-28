@@ -35,7 +35,9 @@ const App = () => {
   useEffect(() => {
     if (debouncedSearch) {
       geo(debouncedSearch).then((res) => {
-        setSearchResults(res);
+        if (typeof res === typeof []) {
+          setSearchResults(res);
+        }
       });
     } else {
       setSearchResults([]);
@@ -45,7 +47,9 @@ const App = () => {
   useEffect(() => {
     if (location) {
       getWeather(location.lat, location.lon).then((res) => {
-        setWeather(res);
+        if (res.cod === 200) {
+          setWeather(res);
+        }
       });
       setSearchResults([]);
     }
@@ -142,7 +146,7 @@ const App = () => {
             </span>
           </div>
           <div className="dark:bg-black/20 rounded-lg dark:text-zinc-200 p-4 flex flex-col items-center shadow-md">
-            <BsThermometer className="w-12 h-12 shrink-0 p-2" />
+            <BsThermometerLow className="w-12 h-12 shrink-0 p-2" />
             <span>
               {`${weather.main.temp.toFixed(0)} °C`}
               {weather.main.feels_like.toFixed(0) !== weather.main.temp.toFixed(0) && (
@@ -157,7 +161,7 @@ const App = () => {
             </span>
           </div>
           <div className="dark:bg-black/20 rounded-lg dark:text-zinc-200 p-4 flex flex-col items-center shadow-md">
-            <BsThermometerLow className="w-12 h-12 shrink-0 p-2" />
+            <BsThermometer className="w-12 h-12 shrink-0 p-2" />
             <span>
               {`${weather.main.temp_min.toFixed(0)} °C`}
             </span>
