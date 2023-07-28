@@ -6,7 +6,8 @@ import {
 } from 'react-icons/bs';
 import { Asset, AssetHistoryStamp, Interval, Intervals, getAssetHistory, getSearchAssets } from './CoinCap';
 import { useDebounce } from 'use-debounce';
-import { AxisOptions, Chart } from 'react-charts';
+import Chart from './Chart';
+import useLocalStorage from '../utils/useLocalStorage';
 
 const App = () => {
   const [search, setSearch] = useState('');
@@ -27,7 +28,7 @@ const App = () => {
     "explorer": "http://gastracker.io/"
   });
   const [debouncedSelectedAsset] = useDebounce(selectedAsset, 500);
-  const [selectedInterval, setSelectedInterval] = useState<Interval>('d1');
+  const [selectedInterval, setSelectedInterval] = useLocalStorage<Interval>('interval', 'd1');
   const [debouncedSelectedInterval] = useDebounce(selectedInterval, 500);
   const [assetHistory, setAssetHistory] = useState<AssetHistoryStamp[]>([]);
 
@@ -99,29 +100,6 @@ const App = () => {
     maximumFractionDigits: 2,
   });
 
-  const series = useMemo(() => ([
-    {
-      label: 'Price',
-      data: assetHistory.map((stamp) => ({
-        primary: new Date(stamp.time),
-        secondary: stamp.priceUsd,
-      })),
-    }
-  ]), [assetHistory]);
-
-  const primaryAxis = useMemo<AxisOptions<Datum>>(() => (
-    {
-      getValue: (datum) => datum.primary,
-    }
-  ), []);
-
-  const secondaryAxes = useMemo<AxisOptions<Datum>[]>(() => [
-    {
-      getValue: (datum) => datum.secondary,
-    },
-  ], []);
-
-
   return (
     <div className="flex flex-row bg-slate-900 text-slate-200 h-screen">
       { /* Sidebar */}
@@ -165,8 +143,8 @@ const App = () => {
           </select>
         </div>
         { /* Chart */}
-        <div className="flex flex-col mt-3 bg-slate-800 rounded-md p-2">
-          <div className="flex flex-row divide-x-2 divide-slate-600">
+        <div className="flex flex-col mt-3 bg-slate-800 rounded-md p-2 grow">
+          <div className="flex flex-row divide-x-2 divide-slate-600 shrink-0">
             <div className="flex flex-col items-center px-8 basis-48 shrink-0">
               <span className="uppercase text-xl">
                 VW Price
@@ -182,7 +160,7 @@ const App = () => {
                   <BsArrowDownShort className="text-red-500 w-5 h-5 inline" />
                 )}
                 <span className="text-xs">
-                  {`${Math.abs(change).toFixed(3)} %`}
+                  {`${Math.abs(change).toFixed(2)} %`}
                 </span>
               </div>
             </div>
@@ -238,14 +216,8 @@ const App = () => {
               </div>
             </div>
           </div>
-          <div className="grow">
-            <Chart
-              options={{
-                data: assetHistory,
-                primaryAxis,
-                secondaryAxes,
-              }}
-            />
+          <div className="grow pt-2">
+              <Chart data={assetHistory} interval={selectedInterval} />
           </div>
         </div>
       </div>

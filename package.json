@@ -33,7 +33,6 @@
     "postcss-loader": "^7.3.3",
     "postcss-preset-env": "^9.1.0",
     "react": "^18.2.0",
-    "react-charts": "^3.0.0-beta.55",
     "react-dnd": "^16.0.1",
     "react-dnd-html5-backend": "^16.0.1",
     "react-dom": "^18.2.0",
