@@ -10,22 +10,22 @@
   "description": "The personal homepage/portfolio of Kay Hennig",
   "icons": [
     {
-      "src": "/icon64.png",
+      "src": "./icon64.png",
       "sizes": "64x64",
       "type": "image/png"
     },
     {
-      "src": "/icon192.png",
+      "src": "./icon192.png",
       "sizes": "192x192",
       "type": "image/png"
     },
     {
-      "src": "/icon256.png",
+      "src": "./icon256.png",
       "sizes": "256x256",
       "type": "image/png"
     },
     {
-      "src": "/icon512.png",
+      "src": "./icon512.png",
       "sizes": "512x512",
       "type": "image/png"
     }
@@ -35,10 +35,10 @@
       "name": "Weather",
       "short_name": "Weather",
       "description": "Check the weather forecast for a location or your current location",
-      "url": "/#/weather",
+      "url": "./#/weather",
       "icons": [
         {
-          "src": "/icon192.png",
+          "src": "./icon192.png",
           "sizes": "192x192"
         }
       ]
@@ -47,10 +47,10 @@
       "name": "Crypto",
       "short_name": "Crypto",
       "description": "Check the current price of a cryptocurrency and its price history",
-      "url": "/#/crypto",
+      "url": "./#/crypto",
       "icons": [
         {
-          "src": "/icon192.png",
+          "src": "./icon192.png",
           "sizes": "192x192"
         }
       ]
