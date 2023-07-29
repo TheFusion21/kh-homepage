@@ -13,20 +13,7 @@ const App = () => {
   const [search, setSearch] = useState('');
   const [debouncedSearch] = useDebounce(search, 500);
   const [searchResults, setSearchResults] = useState<Asset[]>([]);
-  const [selectedAsset, setSelectedAsset] = useState<Asset | null>({
-    "id": "ethereum-classic",
-    "rank": "26",
-    "symbol": "ETC",
-    "name": "Ethereum Classic",
-    "supply": "142211441.1691717200000000",
-    "maxSupply": "210700000.0000000000000000",
-    "marketCapUsd": "2608888229.3227416049338518",
-    "volumeUsd24Hr": "31148078.6737876919442193",
-    "priceUsd": "18.3451360022381279",
-    "changePercent24Hr": "0.9790002983417519",
-    "vwap24Hr": "18.4521489347586335",
-    "explorer": "http://gastracker.io/"
-  });
+  const [selectedAsset, setSelectedAsset] = useState<Asset | null>(null);
   const [debouncedSelectedAsset] = useDebounce(selectedAsset, 500);
   const [selectedInterval, setSelectedInterval] = useLocalStorage<Interval>('interval', 'd1');
   const [debouncedSelectedInterval] = useDebounce(selectedInterval, 500);
@@ -101,16 +88,16 @@ const App = () => {
   });
 
   return (
-    <div className="flex flex-row bg-slate-900 text-slate-200 h-screen">
+    <div className="flex flex-col md:flex-row bg-slate-900 text-slate-200 min-h-screen w-screen md:max-h-screen">
       { /* Sidebar */}
-      <div className="flex flex-col divide-y divide-slate-700 bg-slate-800 m-3 rounded-md">
+      <div className="flex flex-col divide-y divide-slate-700 bg-slate-800 m-3 rounded-md md:max-h-screen">
         <div className="flex flex-row pr-4 py-1 shrink-0">
           <input
             type="text"
             placeholder="Search"
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            className="bg-transparent text-lg ml-4 outline-none"
+            className="bg-transparent text-lg ml-4 outline-none grow sm:grow-0"
           />
           <BsSearch className="w-7 h-7 p-1 shrink-0" />
         </div>
@@ -119,7 +106,7 @@ const App = () => {
             <span
               key={asset.id}
               className="text-lg px-4 py-1 hover:bg-white/10 cursor-pointer"
-              onClick={() => setSelectedAsset(asset)}
+              onClick={() => {setSelectedAsset(asset); setSearchResults([])}}
             >
               {asset.name} - {asset.symbol}
             </span>
@@ -129,7 +116,7 @@ const App = () => {
       { /* Main Content */}
       <div className="grow my-3 mr-3 flex flex-col">
         { /* Topbar */}
-        <div className="bg-slate-800 rounded-md p-2 px-4 flex flex-row justify-center items-center">
+        <div className="bg-slate-800 rounded-md p-2 px-4 flex flex-row justify-center items-center ml-3 md:ml-0">
           <span className="uppercase text-xl">
             {selectedAsset?.name ?? '-'}
           </span>
@@ -143,9 +130,9 @@ const App = () => {
           </select>
         </div>
         { /* Chart */}
-        <div className="flex flex-col mt-3 bg-slate-800 rounded-md p-2 grow">
-          <div className="flex flex-row divide-x-2 divide-slate-600 shrink-0">
-            <div className="flex flex-col items-center px-8 basis-48 shrink-0">
+        <div className="flex flex-col mt-3 bg-slate-800 rounded-md p-2 grow ml-3 md:ml-0">
+          <div className="flex flex-col lg:flex-row divide-y-2 lg:divide-x-2 lg:divide-y-0 divide-slate-600 shrink-0">
+            <div className="flex flex-row justify-between lg:flex-col items-center px-4 2xl:px-8  shrink-0">
               <span className="uppercase text-xl">
                 VW Price
               </span>
@@ -164,7 +151,7 @@ const App = () => {
                 </span>
               </div>
             </div>
-            <div className="flex flex-col items-center px-8 basis-48 shrink-0">
+            <div className="flex flex-row justify-between lg:flex-col items-center px-4 2xl:px-8 shrink-0">
               <span className="uppercase text-xl">
                 Volume 24h
               </span>
@@ -174,7 +161,7 @@ const App = () => {
                 </span>
               </div>
             </div>
-            <div className="flex flex-col items-center px-8 basis-48 shrink-0">
+            <div className="lg:flex flex-row justify-between lg:flex-col items-center px-4 2xl:px-8 shrink-0 flex sm:hidden">
               <span className="uppercase text-xl">
                 Market Cap
               </span>
@@ -184,7 +171,7 @@ const App = () => {
                 </span>
               </div>
             </div>
-            <div className="flex flex-col items-center px-8 basis-48 shrink-0">
+            <div className="lg:flex flex-row justify-between lg:flex-col items-center px-4 2xl:px-8 shrink-0 flex sm:hidden">
               <span className="uppercase text-xl">
                 Supply
               </span>
@@ -194,7 +181,7 @@ const App = () => {
                 </span>
               </div>
             </div>
-            <div className="flex flex-col items-center px-8 basis-48 shrink-0">
+            <div className="lg:flex flex-row justify-between lg:flex-col items-center px-4 2xl:px-8 shrink-0 flex sm:hidden">
               <span className="uppercase text-xl">
                 Max Supply
               </span>
@@ -204,8 +191,8 @@ const App = () => {
                 </span>
               </div>
             </div>
-            <div className="grow" />
-            <div className="flex flex-col items-center px-8 basis-48 shrink-0">
+            <div className="grow hidden 2xl:block" />
+            <div className="lg:flex flex-row justify-between lg:flex-col items-center px-4 2xl:px-8 shrink-0 hidden">
               <span className="uppercase text-xl">
                 Rank
               </span>

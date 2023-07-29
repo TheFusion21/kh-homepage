@@ -10,6 +10,7 @@ const Chart = ({ data, interval } : { data: AssetHistoryStamp[], interval: Inter
   const paddingPercent = 0.025;
   const min = useMemo(() => Math.min(...data.map((d) => parseFloat(d.priceUsd))) || 0, [data]);
   const max = useMemo(() => Math.max(...data.map((d) => parseFloat(d.priceUsd))) || 0, [data]);
+
   const DateFormater = useMemo(() => {
     switch (interval) {
       case 'm1':
@@ -27,12 +28,19 @@ const Chart = ({ data, interval } : { data: AssetHistoryStamp[], interval: Inter
         return Intl.DateTimeFormat('en-US', { month: 'numeric', day: 'numeric', year: 'numeric' });
     }
   }, [interval]);
+
   useEffect(() => {
-    if (ref.current) {
-      const { width, height } = ref.current.getBoundingClientRect();
-      setWidth(width);
-      setHeight(height);
-    }
+    const updateSize = () => {
+      if (ref.current) {
+        setWidth(ref.current.getBoundingClientRect().width);
+        setHeight(ref.current.getBoundingClientRect().height);
+      }
+    };
+    updateSize();
+    window.addEventListener('resize', updateSize);
+    return () => {
+      window.removeEventListener('resize', updateSize);
+    };
   }, [ref, data]);
 
   const xAxisTexts = useMemo(() => {
@@ -59,7 +67,7 @@ const Chart = ({ data, interval } : { data: AssetHistoryStamp[], interval: Inter
       );
     }
     return labels;
-  }, [data, interval, DateFormater]);
+  }, [data, interval, DateFormater, width, height]);
   
   const yAxisTexts = useMemo(() => {
     if (data.length === 0) {
@@ -84,6 +92,7 @@ const Chart = ({ data, interval } : { data: AssetHistoryStamp[], interval: Inter
             {label.toFixed(2)}
           </text>
           <line
+            key={label.toString() + 'line'}
             x1={width * paddingPercent}
             y1={height * (1 - paddingPercent) - (height * (1 - paddingPercent * 2)) * (i / 10)}
             x2={width * (1 - paddingPercent)}
@@ -95,7 +104,7 @@ const Chart = ({ data, interval } : { data: AssetHistoryStamp[], interval: Inter
       );
     }
     return labels;
-  }, [data, interval, min, max]);
+  }, [data, interval, min, max, width, height]);
 
   const line = useMemo(() => {
     if (data.length === 0) {
@@ -117,7 +126,7 @@ const Chart = ({ data, interval } : { data: AssetHistoryStamp[], interval: Inter
         strokeWidth={1}
       />
     );
-  }, [data, interval, min, max, cursor]);
+  }, [data, interval, min, max, cursor, width, height]);
 
   // show value and line on hover at cursor position
   useEffect(() => {
@@ -183,10 +192,10 @@ const Chart = ({ data, interval } : { data: AssetHistoryStamp[], interval: Inter
       </>
     );
 
-  }, [cursor, data, interval, min, max]);
+  }, [cursor, data, interval, min, max, width, height]);
 
   return (
-    <div className="w-full h-full" ref={ref}>
+    <div className="w-full h-full min-h-[16rem] sm:min-h-0" ref={ref}>
       <svg width={width} height={height} className="select-none">
         {/* x axis line with text and padding */}
         <line
