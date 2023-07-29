@@ -146,7 +146,7 @@ const App = () => {
         </div>
       </div>
       {weather && (
-        <div className="grid grid-cols-2 gap-4 mx-8 sm:grid-cols-3 sm:mx-32 md:mx-48 xl:mx-96 sm:pt-16">
+        <div className="grid grid-cols-2 gap-4 mx-4 sm:grid-cols-3 sm:mx-28 md:mx-36 xl:mx-96 sm:pt-16">
           <div className="col-span-full flex flex-col justify-center items-center">
             <img src={iconUrl(weather.weather[0].icon)} alt="Weather Icon" className="h-48" />
             <span className="uppercase dark:text-zinc-200 text-lg font-semibold">
@@ -157,6 +157,7 @@ const App = () => {
             <BsThermometerLow className="w-12 h-12 shrink-0 p-2" />
             <span>
               {`${weather.main.temp.toFixed(0)} °C`}
+              &nbsp;
               {weather.main.feels_like.toFixed(0) !== weather.main.temp.toFixed(0) && (
                 `feels like ${weather.main.feels_like.toFixed(0)} °C` 
               )}
