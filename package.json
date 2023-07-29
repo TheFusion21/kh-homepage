@@ -4,7 +4,7 @@
   "description": "The Wesbite of Kay Hennig",
   "main": "index.js",
   "repository": "https://github.com/TheFusion21/kh-homepage",
-  "homepage": "https://thefusion21.github.io/kh-homepage",
+  "homepage": "https://kayhennig.de/",
   "author": "Kay Hennig",
   "private": true,
   "devDependencies": {

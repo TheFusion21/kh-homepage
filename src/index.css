@@ -8,9 +8,41 @@
 }
 
 ::-webkit-scrollbar-track {
-  @apply bg-slate-600 rounded-full;
+  @apply bg-zinc-600;
 }
 
 ::-webkit-scrollbar-thumb {
-  @apply bg-slate-500 rounded-full;
+  @apply bg-zinc-500;
+}
+
+.hidden-scrollbar::-webkit-scrollbar {
+  @apply w-1;
+}
+
+.animate-blink {
+  animation: blink 1s step-end infinite;
+}
+
+@keyframes blink {
+  0%, 50% {
+    visibility: hidden;
+  }
+  51%, 100% {
+    visibility: visible;
+  }
+} 
+
+.typewriter:after {
+  content: '_';
+  animation: blink-caret 1s step-end infinite;
+  @apply text-zinc-300 text-lg;
+}
+
+@keyframes blink-caret {
+  from, to {
+    @apply invisible;
+  }
+  50% {
+    @apply visible;
+  }
 }

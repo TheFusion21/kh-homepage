@@ -8,7 +8,7 @@ module.exports = merge(commonConfig, {
   output: {
     filename: "js/[name].[contenthash].min.js",
     path: Path.resolve(__dirname, "../../dist"),
-    publicPath: "/kh-homepage/",
+    publicPath: "/",
   },
   devtool: "source-map",
 });
