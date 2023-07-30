@@ -1,13 +1,18 @@
 {
-  "start_url": ".",
+  "start_url": "https://kayhennig.de/",
   "id": ".",
   "scope": "/",
   "display": "standalone",
-  "name": "Kay Hennig Homepage",
+  "name": "Kay Hennig",
   "short_name": "KH Homepage",
-  "background": "#fff",
+  "background_color": "#27272a",
   "orientation": "portrait-primary",
   "description": "The personal homepage/portfolio of Kay Hennig",
+  "theme_color": "#27272a",
+  "categories": [
+    "personal",
+    "portfolio"
+  ],
   "icons": [
     {
       "src": "./icon64.png",
@@ -43,5 +48,8 @@
         }
       ]
     }
-  ]
+  ],
+  "launch_handler": {
+    "client_mode": "focus-existing"
+  }
 }
