@@ -31,7 +31,7 @@ const Skills = ({ height } : {height: number}) => (
       </div>
     </div>
     <BsArrowDown
-      className="w-8 h-8 animate-bounce"
+      className="w-8 h-8 animate-bounce shrink-0"
     />
   </div>
 );

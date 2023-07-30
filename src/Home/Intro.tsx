@@ -70,7 +70,7 @@ const Intro = ({ height } : {height: number}) => {
         </span>
       </div>
       <BsArrowDown
-        className="w-8 h-8 animate-bounce"
+        className="w-8 h-8 animate-bounce shrink-0"
       />
     </div>
   )
