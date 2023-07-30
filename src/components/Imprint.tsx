@@ -1,6 +1,6 @@
 import React from 'react';
 
-const App = () => (
+const Imprint: React.FC = () => (
   <div className="text-sm px-3 pb-8 font-ubuntu-mono md:px-8">
     <div className="flex flex-col">
       <span className="font-bold pt-5 pb-1 uppercase">
@@ -166,4 +166,4 @@ const App = () => (
   </div>
 );
 
-export default App;
+export default Imprint;

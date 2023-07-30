@@ -5,7 +5,7 @@ import Skills from './Skills';
 import Projects from './Projects';
 import Outro from './Outro';
 
-const App = () => {
+const Home: React.FC = () => {
   const [screenHeight, setScreenHeight] = useState(window.innerHeight);
 
   // Resize event listener
@@ -28,4 +28,4 @@ const App = () => {
   )
 };
 
-export default App;
+export default Home;

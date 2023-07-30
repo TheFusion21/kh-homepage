@@ -21,7 +21,11 @@ const introTitles = [
   'Human',
 ];
 
-const Intro = ({ height } : {height: number}) => {
+interface IntroProps {
+  height: number;
+}
+
+const Intro: React.FC<IntroProps> = ({ height }) => {
   const [text, setText] = useState('');
   const [title, setTitle] = useState('');
   // Typewriter effect

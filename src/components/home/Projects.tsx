@@ -4,8 +4,11 @@ import {
   BsLink45Deg,
 } from 'react-icons/bs';
 
+interface ProjectsProps {
+  height: number;
+}
 
-const Projects = ({ height }: { height: number }) => (
+const Projects: React.FC<ProjectsProps> = ({ height }) => (
   <>
     <div className="w-screen flex items-center justify-center flex-col snap-start" style={{ height }}>
       <div className="shrink-0 grow flex flex-col items-center justify-center w-full">

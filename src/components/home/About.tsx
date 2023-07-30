@@ -3,8 +3,11 @@ import {
   BsArrowDown,
 } from 'react-icons/bs';
 
+interface AboutProps {
+  height: number;
+}
 
-const About = ({ height } : {height: number}) => (
+const About: React.FC<AboutProps> = ({ height }) => (
   <div className="w-screen flex items-center justify-center flex-col px-4 sm:px-8 md:px-12 lg:px-16 snap-start" style={{ height }}>
     <div className="shrink-0 grow flex flex-col items-center justify-center text-sm md:text-base lg:text-xl text-center">
       <span className="uppercase text-xl sm:text-3xl mb-3">About</span>
