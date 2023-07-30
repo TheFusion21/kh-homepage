@@ -6,4 +6,8 @@ import tsconfigPaths from 'vite-tsconfig-paths';
 export default defineConfig({
   base: "/kh-homepage/",
   plugins: [react(), tsconfigPaths()],
+  build: {
+    // produce sourcemaps for debug builds
+    sourcemap: true,
+  },
 })
