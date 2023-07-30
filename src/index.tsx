@@ -8,17 +8,13 @@ import {
   RouterProvider,
 } from "react-router-dom";
 const Home = lazy(() => import('./Home/App'));
-const Weather = lazy(() => import('./Weather/App'));
-const Crypto = lazy(() => import('./Crypto/App'));
 const NotFound = lazy(() => import('./NotFound'));
 
 const BrowserRouter = createHashRouter(
   createRoutesFromElements(
     <>
       <Route element={<Home />} index />
-      <Route path="/weather" element={<Weather />} />
-      <Route path="/crypto" element={<Crypto />} />
-      <Route path="/*" element={<NotFound />} />
+      <Route path="*" element={<NotFound />} />
     </>
   ),
   {
