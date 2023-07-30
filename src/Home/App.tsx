@@ -1,14 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import {
-  BsArrowDown,
-} from 'react-icons/bs';
 import Intro from './Intro';
 import About from './About';
 import Skills from './Skills';
 import Projects from './Projects';
+import Outro from './Outro';
 
 const App = () => {
- 
   const [screenHeight, setScreenHeight] = useState(window.innerHeight);
 
   // Resize event listener
@@ -26,6 +23,7 @@ const App = () => {
       <About height={screenHeight} />
       <Skills height={screenHeight} />
       <Projects height={screenHeight} />
+      <Outro height={screenHeight} />
     </div>
   )
 };

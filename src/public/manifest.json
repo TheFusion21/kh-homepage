@@ -32,22 +32,10 @@
   ],
   "shortcuts": [
     {
-      "name": "Weather",
-      "short_name": "Weather",
-      "description": "Check the weather forecast for a location or your current location",
-      "url": "./#/weather",
-      "icons": [
-        {
-          "src": "./icon192.png",
-          "sizes": "192x192"
-        }
-      ]
-    },
-    {
-      "name": "Crypto",
-      "short_name": "Crypto",
-      "description": "Check the current price of a cryptocurrency and its price history",
-      "url": "./#/crypto",
+      "name": "Imprint",
+      "short_name": "Imprint",
+      "description": "Imprint of the website",
+      "url": "./#/Imprint",
       "icons": [
         {
           "src": "./icon192.png",

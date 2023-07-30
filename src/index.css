@@ -18,7 +18,9 @@
 .hidden-scrollbar::-webkit-scrollbar {
   @apply w-1;
 }
-
+body {
+  @apply bg-zinc-800 text-zinc-200;
+}
 .animate-blink {
   animation: blink 1s step-end infinite;
 }
