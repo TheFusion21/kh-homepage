@@ -9,7 +9,7 @@ const Skills = ({ height } : {height: number}) => (
       <span className="uppercase text-xl sm:text-3xl mb-3">
         Skills
       </span>
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-y-4 text-sm md:text-base lg:text-xl">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-y-2 lg:gap-y-4 text-sm md:text-base lg:text-xl w-full">
         <span className="font-bold">
           Languages:
         </span>
@@ -29,7 +29,25 @@ const Skills = ({ height } : {height: number}) => (
           KiCad, Assembly, Brainfuck
         </span>
       </div>
+      <span className="uppercase text-xl sm:text-3xl mb-3 mt-6">
+        experiences
+      </span>
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-y-2 lg:gap-y-4 text-sm md:text-base lg:text-xl w-full">
+        <span className="font-bold">
+          Caseking GmbH
+        </span>
+        <span>
+          Full Stack Developer / Administrator<br/>(1 yr)
+        </span>
+        <span className="font-bold">
+          Games Academy
+        </span>
+        <span>
+          Game Programmer - Apprenticeship<br/>(2 yrs)
+        </span>
+      </div>
     </div>
+    
     <BsArrowDown
       className="w-8 h-8 animate-bounce shrink-0"
     />
