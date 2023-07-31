@@ -7,7 +7,7 @@ import {
 
 const Projects = ({ height }: { height: number }) => (
   <>
-    <div className="w-screen flex items-center justify-center flex-col snap-start" style={{ height }}>
+    <div className="w-screen flex items-center justify-center flex-col snap-start" style={{ height }} id="project1">
       <div className="shrink-0 grow flex flex-col items-center justify-center w-full">
         <span className="uppercase text-xl sm:text-3xl mb-3">
           Projects
@@ -33,7 +33,7 @@ const Projects = ({ height }: { height: number }) => (
         className="w-8 h-8 animate-bounce shrink-0"
       />
     </div>
-    <div className="w-screen flex items-center justify-center flex-col snap-start" style={{ height }}>
+    <div className="w-screen flex items-center justify-center flex-col snap-start" style={{ height }} id="project2">
       <div className="shrink-0 grow flex flex-col items-center justify-center w-full">
         <span className="uppercase text-xl sm:text-3xl mb-3">
           Projects

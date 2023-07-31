@@ -1,8 +1,9 @@
 import React, { lazy, StrictMode, Suspense } from 'react';
 import * as Dom from 'react-dom/client';
 import '/index.css';
+import '/googlefont.css';
 import {
-  createHashRouter,
+  createBrowserRouter,
   createRoutesFromElements,
   Route,
   RouterProvider,
@@ -12,7 +13,7 @@ const NotFound = lazy(() => import('./NotFound'));
 const Imprint = lazy(() => import('./Imprint'));
 const CookiePolicy = lazy(() => import('./CookiePolicy'));
 
-const BrowserRouter = createHashRouter(
+const BrowserRouter = createBrowserRouter(
   createRoutesFromElements(
     <>
       <Route element={<Suspense fallback={<div />}><Home /></Suspense>} index />

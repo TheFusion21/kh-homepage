@@ -4,6 +4,10 @@ import About from './About';
 import Skills from './Skills';
 import Projects from './Projects';
 import Outro from './Outro';
+import {
+  ScrollRestoration,
+} from "react-router-dom";
+import Sidebar from './Sidebar';
 
 const App = () => {
   const [screenHeight, setScreenHeight] = useState(window.innerHeight);
@@ -24,6 +28,8 @@ const App = () => {
       <Skills height={screenHeight} />
       <Projects height={screenHeight} />
       <Outro height={screenHeight} />
+      <Sidebar />
+      <ScrollRestoration />
     </div>
   )
 };

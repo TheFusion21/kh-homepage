@@ -4,7 +4,7 @@ import {
 } from 'react-icons/bs';
 
 const Skills = ({ height } : {height: number}) => (
-  <div className="w-screen flex items-center justify-center flex-col px-4 sm:px-8 md:px-12 lg:px-16 snap-start" style={{ height }}>
+  <div className="w-screen flex items-center justify-center flex-col px-4 sm:px-8 md:px-12 lg:px-16 snap-start" style={{ height }} id="skills">
     <div className="shrink-0 grow flex flex-col items-center justify-center">
       <span className="uppercase text-xl sm:text-3xl mb-3">
         Skills
