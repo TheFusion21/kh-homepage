@@ -3,7 +3,9 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CopyPlugin = require("copy-webpack-plugin");
 
 module.exports = {
-    entry: './index.tsx',
+    entry: {
+        index: './index.tsx'
+    },
     resolve: {
         extensions: ['.ts', '.tsx', '.js', '.jsx'],
     },
@@ -27,7 +29,15 @@ module.exports = {
     },
     plugins: [
         new HtmlWebpackPlugin({
-            template: './index.html'
+            template: './index.html',
+            chunks: ['index'],
+            filename: 'index.html'
+
+        }),
+        new HtmlWebpackPlugin({
+            template: './404.html',
+            chunks: ['index'],
+            filename: '404.html'
         }),
         new CopyPlugin({
             patterns: [

@@ -24,7 +24,9 @@ body {
 .animate-blink {
   animation: blink 1s step-end infinite;
 }
-
+html {
+  scroll-behavior: smooth;
+}
 @keyframes blink {
   0%, 50% {
     visibility: hidden;

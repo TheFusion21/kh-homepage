@@ -16,10 +16,10 @@ const CookiePolicy = lazy(() => import('./CookiePolicy'));
 const BrowserRouter = createBrowserRouter(
   createRoutesFromElements(
     <>
-      <Route element={<Suspense fallback={<div />}><Home /></Suspense>} index />
-      <Route path="*" element={<Suspense fallback={<div />}><NotFound /></Suspense>} />
-      <Route path="/Imprint" element={<Suspense fallback={<div />}><Imprint /></Suspense>} />
-      <Route path="/CookiePolicy" element={<Suspense fallback={<div />}><CookiePolicy /></Suspense>} />
+      <Route element={<Suspense><Home /></Suspense>} index />
+      <Route path="/*" element={<Suspense><NotFound /></Suspense>} />
+      <Route path="/Imprint" element={<Suspense><Imprint /></Suspense>} />
+      <Route path="/CookiePolicy" element={<Suspense><CookiePolicy /></Suspense>} />
     </>
   ),
   {
