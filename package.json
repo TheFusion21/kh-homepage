@@ -28,6 +28,7 @@
     "file-loader": "^6.2.0",
     "gh-pages": "^5.0.0",
     "html-webpack-plugin": "^5.5.3",
+    "mathjs": "^11.9.1",
     "postcss": "^8.4.27",
     "postcss-import": "^15.1.0",
     "postcss-loader": "^7.3.3",

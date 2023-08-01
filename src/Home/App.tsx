@@ -7,6 +7,7 @@ import Outro from './Outro';
 import {
   ScrollRestoration,
 } from "react-router-dom";
+import Apps from './Apps';
 
 const App = () => {
   const [screenHeight, setScreenHeight] = useState(window.innerHeight);
@@ -34,6 +35,8 @@ const App = () => {
     } else if (scrollPosition < screenHeight * 5) {
       setActiveSection('project2');
     } else if (scrollPosition < screenHeight * 6) {
+      setActiveSection('apps');
+    } else {
       setActiveSection('outro');
     }
   }, [screenHeight]);
@@ -48,6 +51,7 @@ const App = () => {
       <About height={screenHeight} />
       <Skills height={screenHeight} />
       <Projects height={screenHeight} />
+      <Apps height={screenHeight} />
       <Outro height={screenHeight} />
       <ScrollRestoration />
     </div>

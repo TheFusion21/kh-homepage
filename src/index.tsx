@@ -8,6 +8,7 @@ import {
   Route,
   RouterProvider,
 } from "react-router-dom";
+const Calculator = lazy(() => import('./Calculator/App'));
 const Home = lazy(() => import('./Home/App'));
 const NotFound = lazy(() => import('./NotFound'));
 const Imprint = lazy(() => import('./Imprint'));
@@ -20,6 +21,8 @@ const BrowserRouter = createBrowserRouter(
       <Route path="/*" element={<Suspense><NotFound /></Suspense>} />
       <Route path="/Imprint" element={<Suspense><Imprint /></Suspense>} />
       <Route path="/CookiePolicy" element={<Suspense><CookiePolicy /></Suspense>} />
+      <Route path="/weather-app" element={<Suspense><div /></Suspense>} />
+      <Route path="/calculator" element={<Suspense><Calculator /></Suspense>} />
     </>
   ),
   {
