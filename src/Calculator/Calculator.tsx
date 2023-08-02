@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import {
   FiDelete
 } from 'react-icons/fi';
@@ -6,6 +6,8 @@ import { evaluate } from 'mathjs';
 const Calculator = ({ isLandscape } : { isLandscape: boolean}) => {
   const [history, setHistory] = useState('');
   const [input, setInput] = useState('');
+  const [error, setError] = useState(false);
+  const longPressTimeout = useRef<NodeJS.Timeout | null>(null);
 
   const doMath = useCallback(() => {
     if (input === '') return;
@@ -19,13 +21,25 @@ const Calculator = ({ isLandscape } : { isLandscape: boolean}) => {
       const result = evaluate(formula);
       setInput(result.toString());
     } catch (e) {
-      setInput('Error');
+      setError(true);
+      setInput('');
       console.error(e);
     }
   }, [input]);
+
+  const onButtonDown = useCallback(() => {
+    longPressTimeout.current = setTimeout(() => setInput(''), 500);
+  }, [longPressTimeout]);
+
+  const onButtonUp = useCallback(() => {
+    if (longPressTimeout.current) clearTimeout(longPressTimeout.current);
+  }, [longPressTimeout]);
+
   const buttons = useMemo(() => [
     {
       onClick: () => setInput((input) => input.slice(0, -1)),
+      onButtonDown: onButtonDown,
+      onButtonUp: onButtonUp,
       icon: <FiDelete className="w-6 h-6" />,
       key: 'delete',
     },
@@ -191,7 +205,7 @@ const Calculator = ({ isLandscape } : { isLandscape: boolean}) => {
         </span>
         <span className="text-3xl font-ubuntu-mono whitespace-nowrap break-keep hyphens-none">
           {/* We need a space to prevent history from being at the bottom */}
-          &nbsp;{input}
+          &nbsp;{input === '' && error && 'Error'}{input}
         </span>
       </div>
       {/* Buttons */}
@@ -202,6 +216,10 @@ const Calculator = ({ isLandscape } : { isLandscape: boolean}) => {
             key={button.key}
             className={`rounded-md p-2 flex justify-center items-center ${index === array.length-1 ? 'bg-green-800 col-span-2 active:bg-green-700' : 'bg-zinc-800 active:bg-zinc-700'}`}
             onClick={button.onClick}
+            onMouseDown={button?.onButtonDown ?? undefined}
+            onMouseUp={button?.onButtonUp ?? undefined}
+            onTouchStart={button?.onButtonDown ?? undefined}
+            onTouchEnd={button?.onButtonUp ?? undefined}
           >
             {button.icon}
           </div>
