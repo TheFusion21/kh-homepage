@@ -4,7 +4,15 @@ const CopyPlugin = require("copy-webpack-plugin");
 
 module.exports = {
     entry: {
-        index: './index.tsx'
+        index: './index.tsx',
+        imprint: './Imprint.tsx',
+        home: './Home/App.tsx',
+        calculator: {
+            import: './Calculator/App.tsx',
+            dependOn: ['math']
+        },
+        notFound: './NotFound.tsx',
+        'math': ['mathjs']
     },
     resolve: {
         extensions: ['.ts', '.tsx', '.js', '.jsx'],

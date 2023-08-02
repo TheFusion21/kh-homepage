@@ -20,9 +20,6 @@ const Outro = ({ height } : {height: number}) => (
       <Link to="/Imprint" className="text-sky-400">
         Imprint
       </Link>
-      <Link to="/CookiePolicy" className="text-sky-400">
-        Cookie Policy
-      </Link>
     </div>
   </div>
 );

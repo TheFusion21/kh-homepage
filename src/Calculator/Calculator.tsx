@@ -9,6 +9,8 @@ const Calculator = ({ isLandscape } : { isLandscape: boolean}) => {
   const [error, setError] = useState(false);
   const longPressTimeout = useRef<NodeJS.Timeout | null>(null);
 
+  const highAspectRatio = screen.width / screen.height > 2;
+  
   const doMath = useCallback(() => {
     if (input === '') return;
     setHistory(input);
@@ -23,7 +25,7 @@ const Calculator = ({ isLandscape } : { isLandscape: boolean}) => {
     } catch (e) {
       setError(true);
       setInput('');
-      console.error(e);
+      console.error(e);s
     }
   }, [input]);
 
@@ -200,9 +202,11 @@ const Calculator = ({ isLandscape } : { isLandscape: boolean}) => {
   return (
     <>
       <div className="grow w-full text-right flex flex-col justify-end">
-        <span className="text-2xl font-ubuntu-mono text-zinc-500">
-          {history}
-        </span>
+        {!highAspectRatio && (
+          <span className="text-2xl font-ubuntu-mono text-zinc-500">
+            {history}
+          </span>
+        )}
         <span className="text-3xl font-ubuntu-mono whitespace-nowrap break-keep hyphens-none">
           {/* We need a space to prevent history from being at the bottom */}
           &nbsp;{input === '' && error && 'Error'}{input}
@@ -216,10 +220,10 @@ const Calculator = ({ isLandscape } : { isLandscape: boolean}) => {
             key={button.key}
             className={`rounded-md p-2 flex justify-center items-center ${index === array.length-1 ? 'bg-green-800 col-span-2 active:bg-green-700' : 'bg-zinc-800 active:bg-zinc-700'}`}
             onClick={button.onClick}
-            onMouseDown={button?.onButtonDown ?? undefined}
-            onMouseUp={button?.onButtonUp ?? undefined}
-            onTouchStart={button?.onButtonDown ?? undefined}
-            onTouchEnd={button?.onButtonUp ?? undefined}
+            onMouseDown={button.onButtonDown ?? undefined}
+            onMouseUp={button.onButtonUp ?? undefined}
+            onTouchStart={button.onButtonDown ?? undefined}
+            onTouchEnd={button.onButtonUp ?? undefined}
           >
             {button.icon}
           </div>

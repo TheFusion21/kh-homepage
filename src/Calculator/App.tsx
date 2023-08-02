@@ -3,23 +3,22 @@ import {
   BsGrid,
 } from 'react-icons/bs';
 import {
-  PiNumberZero,
-  PiNumberOne,
-  PiNumberTwo,
-  PiNumberThree,
-  PiNumberFour,
-  PiNumberFive,
-  PiNumberSix,
-  PiNumberSeven,
-  PiNumberEight,
-  PiNumberNine,
-} from 'react-icons/pi';
-
-import {
-  FiDelete
-} from 'react-icons/fi';
+  TbRulerMeasure,
+  TbCube,
+  TbCalculator,
+  TbWeight,
+  TbTemperature,
+  TbBrandSpeedtest,
+} from 'react-icons/tb';
+import { BsLightningCharge } from 'react-icons/bs';
+import { BiArea } from 'react-icons/bi';
+import { MdOutlineCurrencyExchange } from 'react-icons/md';
 import Calculator from './Calculator';
-
+import Length from './Length';
+import Currency from './Currency';
+import Volume from './Volume';
+import Area from './Area';
+import Weight from './Weight';
 
 const isMobile = () => {
   var check = false;
@@ -32,7 +31,7 @@ const isMobile = () => {
 
 const App = () => {
   const [isLandscape, setIsLandscape] = useState(false);
-  const [menu, setMenu] = useState(false);
+  const [menu, setMenu] = useState(true);
   const [subApp, setSubApp] = useState(0);
 
   useEffect(() => {
@@ -57,7 +56,51 @@ const App = () => {
   }, []);
 
   const subApps = useMemo(() => [
-    <Calculator isLandscape={isLandscape} />
+    {
+      icon: <TbCalculator className="w-8 h-8" />,
+      app: <Calculator isLandscape={isLandscape} />,
+      title: 'Calculator',
+    },
+    {
+      icon: <TbRulerMeasure className="w-8 h-8" />,
+      app: <Length isLandscape={isLandscape} />,
+      title: 'Length',
+    },
+    {
+      icon: <MdOutlineCurrencyExchange className="w-8 h-8" />,
+      app: <Currency isLandscape={isLandscape} />,
+      title: 'Currency',
+    },
+    {
+      icon: <TbCube className="w-8 h-8" />,
+      app: <Volume isLandscape={isLandscape} />,
+      title: 'Volume',
+    },
+    {
+      icon: <BiArea className="w-8 h-8" />,
+      app: <Area isLandscape={isLandscape} />,
+      title: 'Area',
+    },
+    {
+      icon: <TbWeight className="w-8 h-8" />,
+      app: <Weight isLandscape={isLandscape} />,
+      title: 'Weight',
+    },
+    {
+      icon: <TbTemperature className="w-8 h-8" />,
+      app: null,
+      title: 'Temperature',
+    },
+    {
+      icon: <TbBrandSpeedtest className="w-8 h-8" />,
+      app: null,
+      title: 'Speed',
+    },
+    {
+      icon: <BsLightningCharge className="w-8 h-8" />,
+      app: null,
+      title: 'Power',
+    }
   ], [isLandscape]);
   
 
@@ -71,10 +114,21 @@ const App = () => {
             <BsGrid className="w-10 h-10 p-2" />
           </div>
         </div>
-        {subApps[subApp]}
+        {subApps[subApp].app}
         {/* Menu */}
-        <div className="absolute w-full h-full bg-zinc-800 top-12 transition-transform" style={{ transform: `translateX(${menu ? '0%' : '100%'})` }}>
-
+        <div className="absolute w-full h-full bg-zinc-800 top-12 transition-transform flex justify-center items-center" style={{ transform: `translateX(${menu ? '0%' : '100%'})` }}>
+          <div className="w-full grid grid-cols-3 sm:grid-cols-5 gap-2 p-2">
+            {subApps.map((subApp, i) => (
+              <button
+                key={subApp.title}
+                className="flex flex-col items-center justify-center hover:bg-white/5 active:bg-white/10 rounded-lg p-4 gap-2"
+                onClick={() => {setSubApp(i); setMenu(false)}}
+              >
+                {subApp.icon}
+                <span>{subApp.title}</span>
+              </button>
+            ))}
+          </div>
         </div>
       </div>
     </div>

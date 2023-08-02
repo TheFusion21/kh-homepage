@@ -12,7 +12,6 @@ const Calculator = lazy(() => import('./Calculator/App'));
 const Home = lazy(() => import('./Home/App'));
 const NotFound = lazy(() => import('./NotFound'));
 const Imprint = lazy(() => import('./Imprint'));
-const CookiePolicy = lazy(() => import('./CookiePolicy'));
 
 const BrowserRouter = createBrowserRouter(
   createRoutesFromElements(
@@ -20,7 +19,6 @@ const BrowserRouter = createBrowserRouter(
       <Route element={<Suspense><Home /></Suspense>} index />
       <Route path="/*" element={<Suspense><NotFound /></Suspense>} />
       <Route path="/Imprint" element={<Suspense><Imprint /></Suspense>} />
-      <Route path="/CookiePolicy" element={<Suspense><CookiePolicy /></Suspense>} />
       <Route path="/weather-app" element={<Suspense><div /></Suspense>} />
       <Route path="/calculator" element={<Suspense><Calculator /></Suspense>} />
     </>
