@@ -61,7 +61,7 @@ const Intro: React.FC<IntroProps> = ({ height }) => {
   }, []);
 
   return (
-    <div className="w-screen flex items-center justify-center flex-col snap-start" style={{ height }}>
+    <div className="w-screen flex items-center justify-center flex-col snap-start" style={{ height }} id="intro">
       <div className="shrink-0 grow flex items-center justify-center">
         <span className="uppercase text-base sm:text-2xl xl:text-3xl">
           &gt;I am Kay a&nbsp;

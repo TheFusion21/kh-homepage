@@ -1,6 +1,6 @@
 import React, { lazy, Suspense } from "react";
 import {
-    createHashRouter,
+    createBrowserRouter,
     createRoutesFromElements,
     Route,
     RouterProvider,
@@ -9,15 +9,17 @@ import {
 const Home = lazy(() => import('@components/home/Home'));
 const NotFound = lazy(() => import('@components/NotFound'));
 const Imprint = lazy(() => import('@components/Imprint'));
-const CookiePolicy = lazy(() => import('@components/CookiePolicy'));
+const Calculator = lazy(() => import('@components/calculator/App'));
+const Weather = lazy(() => import('@components/weather/App'));
 
-const BrowserRouter = createHashRouter(
+const BrowserRouter = createBrowserRouter(
     createRoutesFromElements(
         <>
-            <Route element={<Suspense fallback={<div />}><Home /></Suspense>} index />
-            <Route path="*" element={<Suspense fallback={<div />}><NotFound /></Suspense>} />
-            <Route path="/Imprint" element={<Suspense fallback={<div />}><Imprint /></Suspense>} />
-            <Route path="/CookiePolicy" element={<Suspense fallback={<div />}><CookiePolicy /></Suspense>} />
+            <Route element={<Suspense><Home /></Suspense>} index />
+            <Route path="/*" element={<Suspense><NotFound /></Suspense>} />
+            <Route path="/imprint" element={<Suspense><Imprint /></Suspense>} />
+            <Route path="/weather" element={<Suspense><Weather /></Suspense>} />
+            <Route path="/calculator" element={<Suspense><Calculator /></Suspense>} />
         </>
     ),
     { basename: '/' },

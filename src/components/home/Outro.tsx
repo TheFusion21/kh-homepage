@@ -6,7 +6,7 @@ interface OutroProps {
 }
 
 const Outro: React.FC<OutroProps> = ({ height }) => (
-  <div className="w-screen flex items-center justify-center flex-col px-4 sm:px-8 md:px-12 lg:px-16 snap-start" style={{ height }}>
+  <div className="w-screen flex items-center justify-center flex-col px-4 sm:px-8 md:px-12 lg:px-16 snap-start" style={{ height }} id="outro">
     <div className="shrink-0 grow flex flex-col items-center justify-center text-lg uppercase">
       <span>
         Source available at&nbsp;
@@ -24,9 +24,6 @@ const Outro: React.FC<OutroProps> = ({ height }) => (
       </span>
       <Link to="/Imprint" className="text-sky-400">
         Imprint
-      </Link>
-      <Link to="/CookiePolicy" className="text-sky-400">
-        Cookie Policy
       </Link>
     </div>
   </div>
