@@ -21,11 +21,15 @@ import Volume from './Volume';
 import Area from './Area';
 import Weight from './Weight';
 import isMobile from '../utils/isMobile';
+import Temperature from './Temperature';
+import Speed from './Speed';
+import Energy from './Energy';
+import Bytes from './Bytes';
 
 const App = () => {
   const [isLandscape, setIsLandscape] = useState(false);
   const [menu, setMenu] = useState(false);
-  const [subApp, setSubApp] = useState(1);
+  const [subApp, setSubApp] = useState(0);
 
   useEffect(() => {
     const getOrientation = () => {
@@ -85,29 +89,29 @@ const App = () => {
     },
     {
       icon: <TbTemperature className="w-8 h-8" />,
-      app: null,
+      app: <Temperature isLandscape={isLandscape} />,
       title: 'Temperature',
     },
     {
       icon: <TbBrandSpeedtest className="w-8 h-8" />,
-      app: null,
+      app: <Speed isLandscape={isLandscape} />,
       title: 'Speed',
     },
     {
       icon: <BsLightningCharge className="w-8 h-8" />,
-      app: null,
-      title: 'Power',
+      app: <Energy isLandscape={isLandscape} />,
+      title: 'Energy',
     },
     {
       icon: <TbDatabase className="w-8 h-8" />,
-      app: null,
+      app: <Bytes isLandscape={isLandscape} />,
       title: 'Bytes',
     }
   ], [isLandscape]);
   
 
   return (
-    <div className="flex justify-center items-center w-screen h-screen select-none bg-zinc-950">
+    <div className="flex justify-center items-center select-none bg-zinc-950" style={{height: window.innerHeight, width: window.innerWidth}}>
       <div className={`flex flex-col w-full h-full relative overflow-hidden bg-zinc-900 ${!isMobile() ? 'max-w-[420px] max-h-[930px]' : ''}`}>
         {/* MenuBar */}
         <div className={`h-12 ${isLandscape ? 'hidden' : 'flex'} flex-row items-center justify-center bg-zinc-700 w-full px-1`}>
