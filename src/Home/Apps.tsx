@@ -11,7 +11,7 @@ const AppList = [
     link: "/weather-app",
   },
   {
-    imgUrl: "https://placehold.co/480x960",
+    imgUrl: "/calculator.png",
     title: "Calculator",
     link: "/calculator",
   }

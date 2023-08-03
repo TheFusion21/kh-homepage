@@ -22,31 +22,11 @@ const App = () => {
     return () => window.removeEventListener('resize', resizeListener);
   }, []);
 
-  const onScroll = useCallback((e: React.UIEvent<HTMLDivElement, UIEvent>) => {
-    const scrollPosition = (e.currentTarget as HTMLElement).scrollTop;
-    if (scrollPosition < screenHeight) {
-      setActiveSection('intro');
-    } else if (scrollPosition < screenHeight * 2) {
-      setActiveSection('about');
-    } else if (scrollPosition < screenHeight * 3) {
-      setActiveSection('skills');
-    } else if (scrollPosition < screenHeight * 4) {
-      setActiveSection('project1');
-    } else if (scrollPosition < screenHeight * 5) {
-      setActiveSection('project2');
-    } else if (scrollPosition < screenHeight * 6) {
-      setActiveSection('apps');
-    } else {
-      setActiveSection('outro');
-    }
-  }, [screenHeight]);
-
-  useEffect(() => {
-    window.location.hash = activeSection;
-  }, [activeSection]);
-  
   return (
-    <div className="bg-zinc-800 text-zinc-200 overflow-x-hidden overflow-y-auto hidden-scrollbar font-ubuntu-mono snap-mandatory snap-y snap-always" style={{ height: screenHeight }} onScroll={onScroll}>
+    <div
+      className="bg-zinc-800 text-zinc-200 overflow-x-hidden overflow-y-auto hidden-scrollbar font-ubuntu-mono snap-mandatory snap-y snap-always"
+      style={{ height: screenHeight }}
+    >
       <Intro height={screenHeight} />
       <About height={screenHeight} />
       <Skills height={screenHeight} />

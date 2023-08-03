@@ -3,6 +3,7 @@ import {
   BsChevronRight,
 } from 'react-icons/bs';
 import Numpad from './Numpad';
+import isMobile from '../utils/isMobile';
 
 const UnitConverter = <Unit extends string>(
   {
@@ -64,8 +65,8 @@ const UnitConverter = <Unit extends string>(
   }, [activeInput]);
 
   return (
-    <div className="grow w-full flex flex-col justify-center items-center relative">
-      <div className="flex flex-col justify-evenly items-center grow">
+    <div className={`grow flex ${isLandscape || (window.innerWidth > window.innerHeight && isMobile()) ? 'flex-row h-full' : 'flex-col w-full'} justify-center items-center relative`}>
+      <div className={`flex ${isLandscape || (window.innerWidth > window.innerHeight && isMobile()) ? 'flex-col h-full p-4 w-full basis-1/2' : 'flex-col grow'} justify-evenly items-center shrink-0`}>
         <div className="bg-zinc-800 px-3 py-1 rounded-md mx-4 cursor-pointer w-full" onClick={() => setActiveInput('from')}>
           <p className="text-lg text-zinc-400 hover:text-zinc-300" onClick={(e) => openSelectionMenu(e, 'from')}>
             {units[fromUnit]}<BsChevronRight className="inline"/>
@@ -79,7 +80,7 @@ const UnitConverter = <Unit extends string>(
           <p className={`text-lg ${activeInput === 'to' ? 'text-yellow-400' : ''}`}>{toValue}</p>
         </div>
       </div>
-      <Numpad onInput={onInput} />
+      <Numpad onInput={onInput} isLandscape={isLandscape} />
       {/* Unit Selection */}
       <div
         className="absolute w-full h-full bg-zinc-800 rounded-md transition-transform duration-500 flex flex-col overflow-y-auto"
