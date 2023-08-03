@@ -12,14 +12,15 @@ const Calculator = lazy(() => import('./Calculator/App'));
 const Home = lazy(() => import('./Home/App'));
 const NotFound = lazy(() => import('./NotFound'));
 const Imprint = lazy(() => import('./Imprint'));
+const Weather = lazy(() => import('./Weather/App'));
 
 const BrowserRouter = createBrowserRouter(
   createRoutesFromElements(
     <>
       <Route element={<Suspense><Home /></Suspense>} index />
       <Route path="/*" element={<Suspense><NotFound /></Suspense>} />
-      <Route path="/Imprint" element={<Suspense><Imprint /></Suspense>} />
-      <Route path="/weather-app" element={<Suspense><div /></Suspense>} />
+      <Route path="/imprint" element={<Suspense><Imprint /></Suspense>} />
+      <Route path="/weather" element={<Suspense><Weather /></Suspense>} />
       <Route path="/calculator" element={<Suspense><Calculator /></Suspense>} />
     </>
   ),

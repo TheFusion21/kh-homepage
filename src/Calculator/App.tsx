@@ -9,6 +9,7 @@ import {
   TbWeight,
   TbTemperature,
   TbBrandSpeedtest,
+  TbDatabase
 } from 'react-icons/tb';
 import { BsLightningCharge } from 'react-icons/bs';
 import { BiArea } from 'react-icons/bi';
@@ -96,13 +97,18 @@ const App = () => {
       icon: <BsLightningCharge className="w-8 h-8" />,
       app: null,
       title: 'Power',
+    },
+    {
+      icon: <TbDatabase className="w-8 h-8" />,
+      app: null,
+      title: 'Bytes',
     }
   ], [isLandscape]);
   
 
   return (
-    <div className="flex justify-center items-center w-screen h-screen select-none">
-      <div className={`flex flex-col w-full h-full relative shadow-lg overflow-hidden bg-zinc-900 ${!isMobile() ? 'max-w-[390px] max-h-[844px]' : ''}`}>
+    <div className="flex justify-center items-center w-screen h-screen select-none bg-zinc-950">
+      <div className={`flex flex-col w-full h-full relative overflow-hidden bg-zinc-900 ${!isMobile() ? 'max-w-[420px] max-h-[930px]' : ''}`}>
         {/* MenuBar */}
         <div className={`h-12 ${isLandscape ? 'hidden' : 'flex'} flex-row items-center justify-center bg-zinc-700 w-full px-1`}>
           <div className="grow" />
@@ -113,7 +119,7 @@ const App = () => {
         {subApps[subApp].app}
         {/* Menu */}
         <div className={`absolute w-full h-full bg-zinc-800 ${isLandscape ? 'top-0' : 'top-12'} transition-transform flex justify-center items-center`} style={{ transform: `translateX(${menu ? '0%' : '100%'})` }}>
-          <div className="w-full grid grid-cols-3 sm:grid-cols-5 gap-2 p-2">
+          <div className={`w-full grid grid-cols-3 ${isLandscape ? 'sm:grid-cols-5' : ''} gap-2 p-2`}>
             {subApps.map((subApp, i) => (
               <button
                 key={subApp.title}
