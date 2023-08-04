@@ -21,7 +21,7 @@ const introTitles = [
   'Human',
 ];
 
-const Intro = ({ height } : {height: number}) => {
+const Intro = () => {
   const [text, setText] = useState('');
   const [title, setTitle] = useState('');
   // Typewriter effect
@@ -56,8 +56,19 @@ const Intro = ({ height } : {height: number}) => {
     return () => clearTimeout(timeout);
   }, []);
 
+  const [screenHeight, setScreenHeight] = useState(window.innerHeight);
+
+  // Resize event listener
+  useEffect(() => {
+    const resizeListener = () => {
+      setScreenHeight(window.innerHeight);
+    };
+    window.addEventListener('resize', resizeListener);
+    return () => window.removeEventListener('resize', resizeListener);
+  }, []);
+
   return (
-    <div className="w-screen flex items-center justify-center flex-col snap-start" style={{ height }} id="intro">
+    <div className="w-full flex items-center justify-center flex-col" style={{ height: screenHeight }} id="intro">
       <div className="shrink-0 grow flex items-center justify-center">
         <span className="uppercase text-base sm:text-2xl xl:text-3xl">
           &gt;I am Kay a&nbsp;

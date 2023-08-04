@@ -1,7 +1,7 @@
 
 body {
   @apply bg-cover bg-no-repeat;
-  background-image: url('../public/background1.jpg');
+  background-image: url('./background1.jpg');
 }
 
 .w-slider {
