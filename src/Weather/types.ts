@@ -64,6 +64,8 @@ export interface ForecastWeather {
   weather: WeatherDescription[];
   clouds: Clouds;
   wind: Wind;
+  rain?: Rain;
+  snow?: Snow;
   visibility: number;
   pop: number;
   sys: System;

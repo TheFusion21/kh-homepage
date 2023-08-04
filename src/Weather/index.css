@@ -1,0 +1,23 @@
+
+body {
+  @apply bg-cover bg-no-repeat;
+  background-image: url('../public/background1.jpg');
+}
+
+.w-slider {
+  appearance: none;
+  @apply h-3 rounded-full bg-white/20 backdrop-blur-sm border border-white/10;
+}
+.w-slider:hover {
+  @apply bg-white/30 transition-colors duration-75;
+}
+
+.w-slider::-webkit-slider-thumb {
+  appearance: none;
+  @apply h-6 w-6 rounded-full bg-sky-500 border border-white/10;
+}
+
+.w-slider::-moz-range-thumb {
+  appearance: none;
+  @apply h-6 w-6 rounded-full bg-sky-500 border border-white/10;
+}
