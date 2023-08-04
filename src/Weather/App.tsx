@@ -7,14 +7,15 @@ import {
 import { Forecast, Weather } from './types';
 import './index.css';
 import * as Wi from 'react-icons/wi';
+import useLocalStorage from '../utils/useLocalStorage';
 interface Location {
   latitude: number;
   longitude: number;
 }
 const App = () => {
-  const [location, setLocation] = useState<Location | null>(null);
-  const [useLocation, setUseLocation] = useState(false);
-  const [search, setSearch] = useState('');
+  const [location, setLocation] = useLocalStorage<Location | null>('weather-location', null);
+  const [useLocation, setUseLocation] = useLocalStorage('weather-location-enabled', false);
+  const [search, setSearch] = useLocalStorage('weather-search', '');
   const [debouncedSearch] = useDebounce(search, 500);
   const [locations, setLocations] = useState<any[]>([]);
   const [weather, setWeather] = useState<Weather | null>(null);
@@ -47,21 +48,6 @@ const App = () => {
         });
     }
   }, [location]);
-
-  // get location when permission granted and set useLocation to true
-  useEffect(() => {
-    navigator.permissions.query({ name: 'geolocation' }).then((result) => {
-      if (result.state === 'granted') {
-        navigator.geolocation.getCurrentPosition((position) => {
-          setLocation({
-            latitude: position.coords.latitude,
-            longitude: position.coords.longitude,
-          });
-          setUseLocation(true);
-        });
-      }
-    });
-  }, []);
 
   // try to get location when useLocation is set to true
   useEffect(() => {
@@ -253,7 +239,7 @@ const App = () => {
           <div>
             {locations.map((location) => (
               <div onClick={() => handleLocationSelect(location)} className="px-2 py-2 hover:bg-black/5 active:bg-black/10">
-                {location.name}
+                {location.name} ({location.country})
               </div>
             ))}
           </div>
@@ -356,7 +342,7 @@ const App = () => {
           max={(forecast && forecast.list[forecast.list.length-1].dt) ?? 0}
           value={forecastSlider}
           step="1"
-          className="w-full mt-4 w-slider"
+          className="w-full mt-4 w-slider mx-4"
           onChange={(e) => setForecastSlider(parseInt(e.target.value))}
         />
         <div className="w-full grid grid-cols-2 gap-4 mt-8 text-sky-950 mx-2">
