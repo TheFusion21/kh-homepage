@@ -1,5 +1,5 @@
 # Ignore build files
-dist
+public/apps
 # Dependency directory
 node_modules
 
@@ -10,3 +10,5 @@ node_modules
 logs
 *.log
 .DS_Store
+
+.env

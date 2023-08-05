@@ -5,7 +5,6 @@ import {
   TbGps,
 } from 'react-icons/tb';
 import { Forecast, Weather } from './types';
-import './index.css';
 import * as Wi from 'react-icons/wi';
 import useLocalStorage from '../utils/useLocalStorage';
 interface Location {
@@ -25,7 +24,7 @@ const App = () => {
   // get geocoding from search
   useEffect(() => {
     if (debouncedSearch) {
-      fetch(`http://api.openweathermap.org/geo/1.0/direct?q=${debouncedSearch}&limit=20&appid=545d3c077ff361e15a8a41a89c5321e3`)
+      fetch(`/direct?q=${debouncedSearch}`)
         .then((res) => res.json())
         .then((data) => {
           setLocations(data);
@@ -36,12 +35,12 @@ const App = () => {
   // get weather from location
   useEffect(() => {
     if (location) {
-      fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${location.latitude}&lon=${location.longitude}&appid=545d3c077ff361e15a8a41a89c5321e3&units=metric`)
+      fetch(`/weather?lat=${location.latitude}&lon=${location.longitude}`)
         .then((res) => res.json())
         .then((data) => {
           setWeather(data as Weather);
         });
-      fetch(`https://api.openweathermap.org/data/2.5/forecast?lat=${location.latitude}&lon=${location.longitude}&appid=545d3c077ff361e15a8a41a89c5321e3&units=metric`)
+      fetch(`/forecast?lat=${location.latitude}&lon=${location.longitude}`)
         .then((res) => res.json())
         .then((data) => {
           setForecast(data as Forecast);
@@ -420,9 +419,10 @@ const App = () => {
           ))}
         </div>
         {/* Footer */}
-        <div className="py-2 text-sky-950">
+        <div className="py-2 text-sky-950 text-center">
           <a href="https://www.pexels.com/photo/low-angle-shot-of-cloudy-sky-11326637/" className="text-sky-800">Photo by Engin Akyurt</a>
           <p>App by Kay Hennig</p>
+          <a href="/imprint">Imprint</a>
         </div>
 
       </div>

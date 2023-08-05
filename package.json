@@ -21,24 +21,18 @@
     "@typescript-eslint/parser": "^6.2.0",
     "autoprefixer": "^10.4.14",
     "babel-loader": "^9.1.3",
-    "copy-webpack-plugin": "^11.0.0",
     "css-loader": "^6.8.1",
     "eslint": "^8.45.0",
     "express": "^4.18.2",
     "file-loader": "^6.2.0",
-    "gh-pages": "^5.0.0",
     "html-webpack-plugin": "^5.5.3",
-    "mathjs": "^11.9.1",
     "postcss": "^8.4.27",
     "postcss-import": "^15.1.0",
     "postcss-loader": "^7.3.3",
     "postcss-preset-env": "^9.1.0",
     "react": "^18.2.0",
-    "react-dnd": "^16.0.1",
-    "react-dnd-html5-backend": "^16.0.1",
     "react-dom": "^18.2.0",
     "react-icons": "^4.10.1",
-    "react-router-dom": "^6.14.2",
     "style-loader": "^3.3.3",
     "svg-inline-loader": "^0.8.2",
     "tailwindcss": "^3.3.3",
@@ -52,13 +46,15 @@
     "webpack-merge": "^5.9.0"
   },
   "scripts": {
-    "build": "yarn run clean-dist && webpack --config=configs/webpack/prod.js",
-    "clean-dist": "rimraf dist/*",
+    "build": "yarn run clean-dist && yarn run build-tw && webpack --config=configs/webpack/prod.js",
+    "build-tw": "tailwindcss -i ./index.css -o ./public/index.css",
+    "clean-dist": "rimraf public/apps/*",
     "lint": "eslint './src/**/*.{js,ts,tsx}' --quiet",
-    "dev": "yarn run start-dev",
-    "start-dev": "webpack serve --config=configs/webpack/dev.js",
-    "start-prod": "yarn run build && node express.js",
-    "deploy": "gh-pages -d dist",
-    "predeploy": "yarn run build"
+    "dev": "webpack --config=configs/webpack/dev.js --watch",
+    "prod": "yarn run build && node express.js"
+  },
+  "dependencies": {
+    "dotenv": "^16.3.1",
+    "https": "^1.0.0"
   }
 }
