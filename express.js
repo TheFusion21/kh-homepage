@@ -1,4 +1,7 @@
-require('dotenv').config();
+const path = require('path');
+require('dotenv').config({
+  path: path.join(__dirname, '.env')
+});
 const express = require('express');
 const https = require('https');
 const app = express();
@@ -6,13 +9,13 @@ const port = 80;
 
 //website
 app.get('/apps/weather', (req, res) => {
-  res.sendFile(__dirname + '/public/apps/weather.html')
+  res.sendFile(path.join(__dirname, '/public/apps/weather.html'));
 });
 app.get('/apps/calculator', (req, res) => {
-  res.sendFile(__dirname + '/public/apps/calculator.html')
+  res.sendFile(path.join(__dirname, '/public/apps/calculator.html'));
 });
 app.get('/imprint', (req, res) => {
-  res.sendFile(__dirname + '/public/imprint.html')
+  res.sendFile(path.join(__dirname, '/public/imprint.html'));
 });
 
 // api calls
@@ -63,12 +66,14 @@ app.get('/forecast', (req, res) => {
 });
 
 // serve static files
-app.use(express.static(__dirname + 'public'));
+app.use(express.static(path.join(__dirname, 'public')));
 // redirect everything else to index.html
 app.get('*', (req, res) => {
-  res.sendFile(__dirname + '/public/index.html')
+  res.sendFile(path.join(__dirname, '/public/index.html'));
 });
 
 app.listen(port, () => {
   console.log(`Listening at http://localhost:${port}`)
 });
+
+console.log(process.env.WEATHER_API_KEY)
