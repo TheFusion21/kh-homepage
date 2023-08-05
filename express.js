@@ -2,7 +2,7 @@ require('dotenv').config();
 const express = require('express');
 const https = require('https');
 const app = express();
-const port = 80;
+const port = 8080;
 
 //website
 app.get('/apps/weather', (req, res) => {
