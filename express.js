@@ -2,7 +2,7 @@ require('dotenv').config();
 const express = require('express');
 const https = require('https');
 const app = express();
-const port = 8080;
+const port = 80;
 
 //website
 app.get('/apps/weather', (req, res) => {
@@ -63,7 +63,7 @@ app.get('/forecast', (req, res) => {
 });
 
 // serve static files
-app.use(express.static('public'));
+app.use(express.static(__dirname + 'public'));
 // redirect everything else to index.html
 app.get('*', (req, res) => {
   res.sendFile(__dirname + '/public/index.html')
