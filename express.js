@@ -5,14 +5,14 @@ require('dotenv').config({
 const express = require('express');
 const https = require('https');
 const app = express();
-const port = 80;
+const port = 3000;
 
 //website
 app.get('/apps/weather', (req, res) => {
   res.sendFile(path.join(__dirname, '/public/apps/weather.html'));
 });
-app.get('/apps/calculator', (req, res) => {
-  res.sendFile(path.join(__dirname, '/public/apps/calculator.html'));
+app.get('/apps/store', (req, res) => {
+  res.sendFile(path.join(__dirname, '/public/apps/store.html'));
 });
 app.get('/imprint', (req, res) => {
   res.sendFile(path.join(__dirname, '/public/imprint.html'));
@@ -69,7 +69,7 @@ app.get('/forecast', (req, res) => {
 app.use(express.static(path.join(__dirname, 'public')));
 // redirect everything else to index.html
 app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, '/public/index.html'));
+  res.redirect('/');
 });
 
 // start server on ipv4 and ipv6

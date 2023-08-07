@@ -4,6 +4,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 module.exports = {
   entry: {
     weather: './Weather/index.tsx',
+    store: './Store/index.tsx',
   },
   resolve: {
     extensions: ['.ts', '.tsx', '.js', '.jsx'],
@@ -28,9 +29,14 @@ module.exports = {
   },
   plugins: [
     new HtmlWebpackPlugin({
-      template: './weather.html',
+      template: './index.html',
       chunks: ['weather'],
       filename: 'weather.html'
+    }),
+    new HtmlWebpackPlugin({
+      template: './index.html',
+      chunks: ['store'],
+      filename: 'store.html'
     }),
   ],
 };
