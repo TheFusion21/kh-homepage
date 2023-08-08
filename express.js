@@ -11,8 +11,8 @@ const port = 3000;
 app.get('/apps/weather', (req, res) => {
   res.sendFile(path.join(__dirname, '/public/apps/weather.html'));
 });
-app.get('/apps/store', (req, res) => {
-  res.sendFile(path.join(__dirname, '/public/apps/store.html'));
+app.get('/apps/modules', (req, res) => {
+  res.sendFile(path.join(__dirname, '/public/apps/modules.html'));
 });
 app.get('/imprint', (req, res) => {
   res.sendFile(path.join(__dirname, '/public/imprint.html'));
