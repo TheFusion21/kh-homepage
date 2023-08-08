@@ -12,6 +12,7 @@ import {
 } from './DS';
 import { useOutletContext, Link } from 'react-router-dom';
 import { Context } from './Context';
+import { useDebounce } from 'use-debounce';
 
 interface CartItem {
   product: Product;
@@ -30,16 +31,20 @@ const Header = () => {
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+
+  const [search, setSearch] = useState('');
+  const [searchValue] = useDebounce(search, 500);
+  const [searchResults, setSearchResults] = useState<Product[]>([]);
   
   const {
     user,
     cart,
-    token,
     logUserIn,
     signOut,
     getProduct,
     removeFromCart,
     addToCart,
+    searchProducts,
   } = useContext(Context);
 
   useEffect(() => {
@@ -66,7 +71,13 @@ const Header = () => {
   };
 
   const toggleAccount = () => {
-    setAccountOpen((open) => !open);
+    setAccountOpen((open) => {
+      if (!open) {
+        setEmail('');
+        setPassword('');
+      }
+      return !open;
+    });
   }
 
   const handleSignIn = useCallback(() => {
@@ -120,6 +131,31 @@ const Header = () => {
     addToCart(item.product.id, item.product.variants[item.variant].id);
   }, [addToCart]);
 
+  // search only first page of results will show so 10 results max
+  // we only want the full search when user presses enter or the more button at the bottom of the search results
+  useEffect(() => {
+    if (searchValue.trim() !== '') {
+      searchProducts(searchValue, 0).then((products) => {
+        setSearchResults(products.products);
+        console.log(products);
+      });
+    } else {
+      setSearchResults([]);
+    }
+  }, [searchValue, searchProducts]);
+
+  const handleSearchReturn = useCallback((e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Enter') {
+      // TODO: go to search page
+    }
+  }, []);
+
+  const handleAddToCart = useCallback((e: React.MouseEvent<SVGElement, MouseEvent>, product: Product) => {
+    e.stopPropagation();
+    e.preventDefault();
+    addToCart(product.id, product.variants[0].id);
+  }, [addToCart]);
+
   return (
     <>
       <div className="w-full h-12 fixed bg-slate-50 shadow-lg flex justify-between items-center">
@@ -131,6 +167,9 @@ const Header = () => {
           type="text" 
           className="grow w-full bg-transparent outline-none border border-slate-950/10 rounded-full px-3 py-1 my-1 md:mx-16 lg:mx-48 2xl:mx-96"
           placeholder="Search"
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
+          onKeyDown={handleSearchReturn}
         />
         <button type="button" className="p-1 outline-none" onClick={toggleCart} ref={cartIconRef}>
           <AiOutlineShoppingCart className={`w-11 h-11 p-1 hover:bg-slate-950/10 cursor-pointer rounded-full ${cartOpen ? 'bg-slate-950/10' : ''}`} aria-hidden={true} />
@@ -223,6 +262,39 @@ const Header = () => {
               </button>
             </div>
           )}
+        </div>
+      )}
+      {searchResults.length > 0 && !cartOpen && !accountOpen && (
+        <div className="w-full top-12 fixed">
+          <div className="bg-slate-100 w-full mx-auto md:w-1/3 max-w-full md:rounded-b-xl max-h-full overflow-hidden">
+          {searchResults.map((product) => (
+            <Link to={`/product/${product.id}`} className="flex flex-row items-center px-1 hover:bg-slate-950/10" key={product.id}>
+              <img
+                src={product.variants[0].images[0]}
+                alt={`${product.name} ${product.variants[0].color}`}
+                className="w-16 h-16 p-1"
+              />
+              <div>
+                <p>{product.name} ({product.variants[0].color})</p>
+                {product.discount ? (
+                  <p>
+                    <span className="line-through">
+                      {Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(product.price)}
+                    </span>
+                    &nbsp;
+                    {Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(product.price - product.price * product.discount)}
+                  </p>
+                ) : (
+                  <p>
+                    {Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(product.price)}
+                  </p>
+                )}
+              </div>
+              <div className="grow" />
+              <AiOutlinePlus className="w-8 h-8 p-2 bg-slate-300 hover:bg-slate-950/10 cursor-pointer rounded-full" aria-label="Add to cart" onClick={(e) => handleAddToCart(e, product)} />
+            </Link>
+          ))}
+        </div> 
         </div>
       )}
       {/* Header space */}

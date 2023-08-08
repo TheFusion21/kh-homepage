@@ -49,6 +49,12 @@ export interface Error {
   detail: string;
 }
 
+export interface Products {
+  products: Product[];
+  next: number | null;
+  prev: number | null;
+}
+
 const API_URL = `http://${window.location.hostname}:8000`;
 
 export const login = (email: string, password: string): Promise<Login> => {
@@ -94,7 +100,7 @@ export const getCart = (token: string): Promise<Cart> => {
 
 export const addToCart = (token: string, productId: number, variantId: number): Promise<Cart> => {
   return fetch(`${API_URL}/cart`, {
-    method: 'POST',
+    method: 'PUT',
     headers: {
       'Content-Type': 'application/json',
       'Authorization': `Bearer ${token}`
@@ -125,6 +131,15 @@ export const getProducts = (page: number): Promise<Product[]> => {
 
 export const getProduct = (productId: number): Promise<Product> => {
   return fetch(`${API_URL}/products/${productId}`, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  }).then(res => res.json());
+};
+
+export const searchProducts = (query: string, page: number): Promise<Products> => {
+  return fetch(`${API_URL}/products/search?q=${query}&page=${page}`, {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',

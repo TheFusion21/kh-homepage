@@ -60,9 +60,13 @@ const Layout = () => {
     return DS.getProducts(page);
   }, []);
 
+  const searchProducts = useCallback((query: string, page: number): Promise<DS.Products> => {
+    return DS.searchProducts(query, page);
+  }, []);
+
   const addToCart = useCallback((id: number, variantId: number | null): Promise<void> => {
     if (token === null) {
-      return new Promise((resolve) => {
+      return new Promise(() => {
         const newCart = [...cart];
         const index = newCart.findIndex((item) => item.product_id === id && item.variant_id === variantId);
         if (index === -1) {
@@ -74,6 +78,7 @@ const Layout = () => {
         } else {
           newCart[index].quantity++;
         }
+        setCart(newCart);
       });
     } else {
       return DS.addToCart(token, id, variantId).then((cart) => {
@@ -94,6 +99,7 @@ const Layout = () => {
             newCart.splice(index, 1);
           }
         }
+        setCart(newCart);
       });
     } else {
       return DS.removeFromCart(token, id, variantId).then((cart) => {
@@ -105,6 +111,17 @@ const Layout = () => {
   const context: ContextProps = useMemo(() => ({
     user,
     cart,
+    loadUser,
+    logUserIn,
+    signOut,
+    getProduct,
+    getProducts,
+    addToCart,
+    removeFromCart,
+    searchProducts,
+  }), [
+    user,
+    cart,
     token,
     loadUser,
     logUserIn,
@@ -113,7 +130,8 @@ const Layout = () => {
     getProducts,
     addToCart,
     removeFromCart,
-  }), [user, cart, token, loadUser]);
+    searchProducts,
+  ]);
 
   return (
     <Context.Provider value={context}>
