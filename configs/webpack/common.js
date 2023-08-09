@@ -4,7 +4,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 module.exports = {
   entry: {
     weather: './Weather/index.tsx',
-    modules: './Modules/index.tsx',
+    modules: './SpaceXMap/index.tsx',
   },
   resolve: {
     extensions: ['.ts', '.tsx', '.js', '.jsx'],
@@ -35,8 +35,8 @@ module.exports = {
     }),
     new HtmlWebpackPlugin({
       template: './index.html',
-      chunks: ['modules'],
-      filename: 'modules.html'
+      chunks: ['spaceXMap'],
+      filename: 'spaceXMap.html'
     }),
   ],
 };
