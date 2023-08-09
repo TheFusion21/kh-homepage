@@ -3,9 +3,22 @@ require('dotenv').config({
   path: path.join(__dirname, '.env')
 });
 const express = require('express');
+const livereload = require('livereload');
+const connectLiveReload = require("connect-livereload");
 const https = require('https');
 const app = express();
 const port = 3000;
+
+// live reload
+const liveReloadServer = livereload.createServer();
+liveReloadServer.watch(path.join(__dirname, 'public'));
+liveReloadServer.server.once('connection', () => {
+  setTimeout(() => {
+    liveReloadServer.refresh('/');
+  }, 100);
+});
+
+app.use(connectLiveReload());
 
 //website
 app.get('/apps/weather', (req, res) => {

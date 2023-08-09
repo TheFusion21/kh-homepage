@@ -55,7 +55,9 @@
     "prod": "yarn run build && node express.js"
   },
   "dependencies": {
+    "connect-livereload": "^0.6.1",
     "dotenv": "^16.3.1",
-    "https": "^1.0.0"
+    "https": "^1.0.0",
+    "livereload": "^0.9.3"
   }
 }
