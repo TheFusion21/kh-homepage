@@ -24,8 +24,11 @@ app.use(connectLiveReload());
 app.get('/apps/weather', (req, res) => {
   res.sendFile(path.join(__dirname, '/public/apps/weather.html'));
 });
-app.get('/apps/spacexmap', (req, res) => {
-  res.sendFile(path.join(__dirname, '/public/apps/spaceXMap.html'));
+app.get('/apps/ssc', (req, res) => {
+  res.sendFile(path.join(__dirname, '/public/apps/ssc.html'));
+});
+app.get('/apps/ssc/*', (req, res) => {
+  res.sendFile(path.join(__dirname, '/public/apps/ssc.html'));
 });
 app.get('/imprint', (req, res) => {
   res.sendFile(path.join(__dirname, '/public/imprint.html'));
