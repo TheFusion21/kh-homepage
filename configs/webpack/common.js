@@ -1,15 +1,18 @@
 const Path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const TsconfigPathsPlugin = require('tsconfig-paths-webpack-plugin');
 
 module.exports = {
   entry: {
-    weather: './Weather/index.tsx',
-    ssc: './SteamShopClone/index.tsx',
+    weather: './src/Weather/index.tsx',
+    ssc: './src/SteamShopClone/index.tsx',
   },
   resolve: {
     extensions: ['.ts', '.tsx', '.js', '.jsx'],
+    plugins: [new TsconfigPathsPlugin({
+      configFile: Path.resolve(__dirname, "../../tsconfig.json"),
+    })]
   },
-  context: Path.resolve(__dirname, "../../src"),
   module: {
     rules: [
       {
@@ -29,12 +32,12 @@ module.exports = {
   },
   plugins: [
     new HtmlWebpackPlugin({
-      template: './index.html',
+      template: './src/index.html',
       chunks: ['weather'],
       filename: 'weather.html'
     }),
     new HtmlWebpackPlugin({
-      template: './index.html',
+      template: './src/index.html',
       chunks: ['ssc'],
       filename: 'ssc.html'
     }),

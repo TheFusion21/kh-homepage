@@ -6,9 +6,12 @@ const express = require('express');
 const livereload = require('livereload');
 const connectLiveReload = require("connect-livereload");
 const https = require('https');
+const cors = require('cors');
+const apicache = require('apicache');
 const app = express();
 const port = 3000;
 
+let cache = apicache.middleware;
 // live reload
 const liveReloadServer = livereload.createServer();
 liveReloadServer.watch(path.join(__dirname, 'public'));
@@ -19,6 +22,7 @@ liveReloadServer.server.once('connection', () => {
 });
 
 app.use(connectLiveReload());
+app.use(cors());
 
 //website
 app.get('/apps/weather', (req, res) => {
@@ -34,7 +38,7 @@ app.get('/imprint', (req, res) => {
   res.sendFile(path.join(__dirname, '/public/imprint.html'));
 });
 
-// api calls
+// weather api calls
 app.get('/weather', (req, res) => {
   https.request({
     host: 'api.openweathermap.org',
@@ -80,6 +84,57 @@ app.get('/forecast', (req, res) => {
     });
   }).end();
 });
+
+// steam api calls
+app.get('/api/featured', cache('1 minute'), (req, res) => {
+  https.request({
+    host: 'store.steampowered.com',
+    path: '/api/featured',
+    method: 'GET'
+  }, (response) => {
+    let data = '';
+    response.on('data', (chunk) => {
+      data += chunk;
+    });
+    response.on('end', () => {
+      res.send(data);
+    });
+  }).end();
+});
+
+app.get('/api/featuredcategories', cache('1 minute'), (req, res) => {
+  https.request({
+    host: 'store.steampowered.com',
+    path: '/api/featuredcategories',
+    method: 'GET'
+  }, (response) => {
+    let data = '';
+    response.on('data', (chunk) => {
+      data += chunk;
+    });
+    response.on('end', () => {
+      res.send(data);
+    });
+  }).end();
+});
+
+app.get('/api/appdetails', cache('1 minute'), (req, res) => {
+  const appid = req.query.appids;
+  https.request({
+    host: 'store.steampowered.com',
+    path: '/api/appdetails?appids=' + appid,
+    method: 'GET',
+  }, (response) => {
+    let data = '';
+    response.on('data', (chunk) => {
+      data += chunk;
+    });
+    response.on('end', () => {
+      res.send(data);
+    });
+  }).end();
+});
+
 
 // serve static files
 app.use(express.static(path.join(__dirname, 'public')));

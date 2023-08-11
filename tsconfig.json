@@ -1,6 +1,9 @@
 {
   "compilerOptions": {
     "outDir": "dist",
+    "sourceRoot": "src",
+    "rootDir": "src",
+    "baseUrl": "src",
     "sourceMap": true,
     "module": "ESNext",
     "target": "ESNext",

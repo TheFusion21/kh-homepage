@@ -12,12 +12,16 @@ module.exports = {
         steam: {
           black: '#171d25',
           white: '#e5e5e5',
+          back: '#1b2838',
+          green: '#BEEE11',
+          green2: '#4c6b22',
+          grey: '#344654',
         }
       },
       textShadow: {
-        sm: '0 1px 2px var(--tw-shadow-color)',
-        DEFAULT: '0 2px 4px var(--tw-shadow-color)',
-        lg: '0 8px 16px var(--tw-shadow-color)',
+        sm: '2px 2px 0px var(--tw-shadow-color)',
+        DEFAULT: '2px px 0px var(--tw-shadow-color)',
+        lg: '4px 4px 0px var(--tw-shadow-color)',
       },
     },
   },

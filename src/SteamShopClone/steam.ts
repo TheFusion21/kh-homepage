@@ -107,7 +107,7 @@ interface FeaturedLinux {
 }
 
 export const getFeatured = (): Promise<Featured> => 
-  fetch('https://store.steampowered.com/api/featured').then(res => res.json());
+  fetch('/api/featured').then(res => res.json());
 
 // Featured Categories
 export interface FeaturedCategories extends ResponseBase {
@@ -153,7 +153,7 @@ interface Item1 {
   header_image: string
   purchase_package: number
 }
-interface Specials {
+export interface Specials {
   id: string
   name: string
   items: Item2[]
@@ -178,7 +178,7 @@ interface Item2 {
   controller_support?: string
   headline?: string
 }
-interface ComingSoon {
+export interface ComingSoon {
   id: string
   name: string
   items: Item3[]
@@ -202,7 +202,7 @@ interface Item3 {
   discount_expiration?: number
   controller_support?: string
 }
-interface TopSellers {
+export interface TopSellers {
   id: string
   name: string
   items: Item4[]
@@ -227,7 +227,7 @@ interface Item4 {
   headline?: string
   discount_expiration?: number
 }
-interface NewReleases {
+export interface NewReleases {
   id: string
   name: string
   items: Item5[]
@@ -260,8 +260,8 @@ interface Trailerslideshow {
   name: string
 }
 
-export const getFeaturedCategories = () =>
-  fetch('https://store.steampowered.com/api/featuredcategories').then(res => res.json());
+export const getFeaturedCategories = (): Promise<FeaturedCategories> =>
+  fetch('/api/featuredcategories').then(res => res.json());
 
 // Search
 export interface AppResult {
@@ -272,13 +272,13 @@ export interface AppResult {
 }
 
 export const search = (term: string): Promise<AppResult[]> =>
-  fetch(`https://steamcommunity.com/actions/SearchApps/${term}`).then(res => res.json());
+  fetch(`/actions/SearchApps/${term}`).then(res => res.json());
 
 // App Details
-export interface AppDetail {
-  [appId: number]: App
+export interface AppDetails {
+  [appId: string]: AppDetail
 }
-interface App {
+export interface AppDetail {
   success: boolean
   data: Data
 }
@@ -402,8 +402,8 @@ interface ContentDescriptors {
   notes: string
 }
 
-export const getGameDetails = (appId: string): Promise<AppDetail> =>
-  fetch(`https://store.steampowered.com/api/appdetails?appids=${appId}`).then(res => res.json());
+export const getGameDetails = (appId: string | number): Promise<AppDetails> =>
+  fetch(`/api/appdetails?appids=${appId}`).then(res => res.json());
 
 
 // apps in category
@@ -429,8 +429,8 @@ interface Item {
   id: number
 }
 
-export const getAppsInCategory = (categoryId: string): Promise<CategoryApps> =>
-  fetch(`https://store.steampowered.com/api/getappsincategory/?category=${categoryId}&cc=de&l=english`).then(res => res.json());
+export const getAppsInCategory = (categoryId: Category): Promise<CategoryApps> =>
+  fetch(`/api/getappsincategory/?category=${categoryId}&cc=de&l=english`).then(res => res.json());
 
 // apps in genre
 export interface GenreApps extends ResponseBase {
@@ -448,4 +448,4 @@ interface Tabs2 {
 }
 
 export const getAppsInGenre = (genreId: string): Promise<GenreApps> =>
-  fetch(`https://store.steampowered.com/api/getappsingenre/?genre=${genreId}&cc=de&l=english`).then(res => res.json());
+  fetch(`/api/getappsingenre/?genre=${genreId}&cc=de&l=english`).then(res => res.json());

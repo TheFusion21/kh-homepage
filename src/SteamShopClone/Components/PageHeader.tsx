@@ -1,11 +1,12 @@
-import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { Link } from 'react-router-dom';
-import { useDebounce } from 'use-debounce';
+import React, { useCallback, useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import {
   AiOutlineSearch,
   AiOutlineMenu,
+  AiOutlineRight,
 } from 'react-icons/ai';
 import AnimateHeight from 'react-animate-height';
+
 
 interface MenuEntry {
   name?: string;
@@ -302,15 +303,16 @@ const SubMenu = ({ menuEntry, onClick, isExpanded } : { menuEntry: MenuEntry, on
   return (
     <li className="flex min-h-[40px] flex-col" key={menuEntry.name}>
       {menuEntry.link ? (
-        <Link to={menuEntry.link} className="p-2 hover:bg-white/10 font-semibold whitespace-nowrap">
+        <Link to={menuEntry.link} className="py-2 px-4 hover:bg-white/10 font-semibold whitespace-nowrap">
           {menuEntry.name}
         </Link>
       ) : (
         <span
-          className={`p-2 cursor-pointer hover:bg-white/10 font-semibold whitespace-nowrap ${isExpanded ? 'bg-white/10' : ''}`}
+          className={`py-2 px-4 justify-between flex cursor-pointer hover:bg-white/10 font-semibold whitespace-nowrap ${isExpanded ? 'bg-white/10' : ''}`}
           onClick={handleClick}
         >
           {menuEntry.name}
+          <AiOutlineRight className="inline-block ml-2 w-5 h-5 transition-transform duration-300 text-white/50" style={{ transform: `rotate(${isExpanded ? 90 : 0}deg)` }} />
         </span>
       )}
       {menuEntry.subMenu && (
@@ -320,8 +322,8 @@ const SubMenu = ({ menuEntry, onClick, isExpanded } : { menuEntry: MenuEntry, on
         >
           <ul className="flex flex-col bg-slate-600">
             {menuEntry.subMenu.map((subEntry, j) => (
-              <li className="flex min-h-[40px] flex-col whitespace-nowrap">
-                <Link to={subEntry.link} className="p-2 hover:bg-white/10">
+              <li className="flex min-h-[40px] flex-col whitespace-nowrap" key={subEntry.name}>
+                <Link to={subEntry.link} className="py-2 px-4 hover:bg-white/10">
                   {subEntry.name}
                 </Link>
               </li>
@@ -356,17 +358,18 @@ const CategoriesMenu = () => {
   }, [subMenuOpen]);
 
   return (
-    <li className="flex min-h-[40px] flex-col">
+    <li className="flex flex-col">
       <span
-        className={`p-2 cursor-pointer hover:bg-white/10 font-semibold ${isExpanded ? 'bg-white/10' : ''}`}
+        className={`py-2 px-4 justify-between hover:bg-white/10 font-semibold cursor-pointer h-full flex items-center ${isExpanded ? 'bg-white/10' : ''}`}
         onClick={() => setIsExpanded((prev) => !prev)}
       >
         Categories
+        <AiOutlineRight className="inline-block ml-2 w-5 h-5 transition-transform duration-300 text-white/50" style={{ transform: `rotate(${isExpanded ? 90 : 0}deg)` }} />
       </span>
       <AnimateHeight
         height={isExpanded ? 'auto' : 0}
         duration={300}
-        className="md:absolute top-[40px] left-0 right-0 md:bg-slate-600 md:shadow-lg"
+        className="md:absolute top-16 left-0 right-0 md:bg-slate-600 md:shadow-lg max-w-5xl md:mx-auto md:-z-10"
       >
         <ul className="flex flex-col md:grid md:grid-cols-4 md:px-4 md:py-2">
           {menuStructure.map((entry, i) => (
@@ -385,54 +388,63 @@ const CategoriesMenu = () => {
 
 const PageHeader = () => {
   const [search, setSearch] = useState('');
-  const [debouncedSearch] = useDebounce(search, 250);
   const [menuOpen, setMenuOpen] = useState(false);
+  const navigate = useNavigate();
+
+  const handleSearchClick = useCallback(() => {
+    if (search) {
+      navigate(`/search/${search}`);
+    }
+  }, [search]);
+
+  const handleSearchReturnDown = useCallback((e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Enter') {
+      handleSearchClick();
+    }
+  }, [handleSearchClick]);
 
   return (
-    <header className="w-full bg-steam-black text-steam-white">
-      <ul className="w-full max-w-4xl flex flex-col md:h-16 md:flex-row md:mx-auto md:items-center">
+    <header className="w-full md:bg-steam-black z-20 relative">
+      <ul className="w-full max-w-5xl flex flex-col md:h-16 md:flex-row md:mx-auto md:items-center md:shadow-lg">
         {/* Menu Button for mobile */}
-        <li className="shadow-lg bg-steam-black">
+        <li className="shadow-lg bg-steam-black text-steam-white z-10 h-12 md:h-16 md:shadow-none">
           <ul className="flex flex-row items-center justify-start relative">
-            <li className="md:hidden left-0">
-                <button className="hover:bg-white/10" onClick={() => console.log('menu')}>
-                  <AiOutlineMenu className="w-12 h-12 p-3" />
-                </button>
-              </li>
-              {/* Logo */}
-              <li className="z-10 md:shadow-none absolute md:relative mx-auto left-0 right-0">
-                <img
-                  src="https://store.akamai.steamstatic.com/public/shared/images/responsive/header_logo.png"
-                  alt="Steam Logo"
-                  className="h-14 p-2 md:h-16 md:p-4 mx-auto"
-                />
-              </li>
+            {/* Logo */}
+            <li className="absolute md:relative mx-auto left-0 right-0 top-0">
+              <img
+                src="https://store.akamai.steamstatic.com/public/shared/images/responsive/header_logo.png"
+                alt="Steam Logo"
+                className="h-12 p-2 md:h-16 md:p-4 mx-auto"
+              />
+            </li>
+            <li className="z-10 md:hidden left-0">
+              <button className="hover:bg-white/10" onClick={() => setMenuOpen((prev) => !prev)}>
+                <AiOutlineMenu className="w-12 h-12 p-3" />
+              </button>
+            </li>
           </ul>
         </li>
-        <li className="grow">
-          <ul className="flex flex-col md:flex-row">
+        <li className={`grow bg-steam-black text-steam-white transition-transform md:transition-none md:h-16 md:px-2 ${menuOpen ? 'mobile-transform' : ''}`}>
+          <ul className="flex flex-col md:flex-row h-full items-stretch">
             <li className="flex flex-col">
-              <Link to="/" className="py-2 px-4 hover:bg-white/10 font-semibold">
+              <Link to="/" className="py-2 px-4 hover:bg-white/10 font-semibold h-full flex items-center">
                 Home
               </Link>
             </li>
-            <li className="flex flex-col">
-              <span className="py-2 px-4 hover:bg-white/10 font-semibold cursor-pointer">
-                Categories
-              </span>
-            </li>
+            <CategoriesMenu />
             <li className="md:grow" />
-            <li className="flex flex-row items-start">
+            <li className="flex flex-row items-center">
               <input
                 type="text"
                 placeholder="Search"
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
-                className="grow justify-center items-center outline-none bg-white/5 px-2 py-2 h-10"
+                className="grow justify-center items-center outline-none bg-white/5 px-2 py-2 md h-10 md:h-auto"
+                onKeyDown={handleSearchReturnDown}
               />
               <AiOutlineSearch
                 className="w-10 h-10 p-1 bg-white/5 cursor-pointer" 
-                onClick={() => {}}
+                onClick={handleSearchClick}
               />
             </li>
           </ul>
