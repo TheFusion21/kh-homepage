@@ -407,7 +407,7 @@ const PageHeader = () => {
     <header className="w-full md:bg-steam-black z-20 fixed">
       <ul className="w-full max-w-5xl flex flex-col md:h-16 md:flex-row md:mx-auto md:items-center md:shadow-lg">
         {/* Menu Button for mobile */}
-        <li className="shadow-lg bg-steam-black text-steam-white z-10 h-12 md:h-16 md:shadow-none">
+        <li className="shadow-lg bg-steam-black text-steam-white z-10 h-12 md:h-16 md:shadow-none md:hidden">
           <ul className="flex flex-row items-center justify-start relative md:static">
             {/* Logo */}
             <li className="absolute md:static mx-auto left-0 right-0 top-0">
@@ -417,7 +417,7 @@ const PageHeader = () => {
                 className="h-12 p-2 md:h-16 md:p-4 mx-auto"
               />
             </li>
-            <li className="z-10 md:hidden left-0">
+            <li className="z-10 left-0">
               <button className="hover:bg-white/10" onClick={() => setMenuOpen((prev) => !prev)}>
                 <AiOutlineMenu className="w-12 h-12 p-3" />
               </button>
@@ -426,7 +426,14 @@ const PageHeader = () => {
         </li>
         <li className={`grow bg-steam-black text-steam-white transition-transform md:transition-none motion-reduce:transition-none md:h-16 md:px-2 ${menuOpen ? '' : 'mobile-transform'}`}>
           <ul className="flex flex-col md:flex-row h-full items-stretch">
-            <li className="flex flex-col">
+            <li className="hidden md:block">
+              <img
+                src="https://store.akamai.steamstatic.com/public/shared/images/responsive/header_logo.png"
+                alt="Steam Logo"
+                className="h-16 p-4"
+              />
+            </li>
+            <li>
               <Link to="/" className="py-2 px-4 hover:bg-white/10 font-semibold h-full flex items-center">
                 Home
               </Link>
