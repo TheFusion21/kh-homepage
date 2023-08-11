@@ -16,6 +16,7 @@ module.exports = {
           green: '#BEEE11',
           green2: '#4c6b22',
           grey: '#344654',
+          blue: '#4f94bc',
         }
       },
       textShadow: {

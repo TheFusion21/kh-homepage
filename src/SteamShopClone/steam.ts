@@ -24,9 +24,9 @@ export interface ResponseBase {
 // Featured
 export interface Featured extends ResponseBase {
   large_capsules: LargeCapsule[]
-  featured_win: FeaturedWin[]
-  featured_mac: FeaturedMac[]
-  featured_linux: FeaturedLinux[]
+  featured_win: FeaturedPlatform[]
+  featured_mac: FeaturedPlatform[]
+  featured_linux: FeaturedPlatform[]
   layout: string
 }
 interface LargeCapsule {
@@ -48,7 +48,7 @@ interface LargeCapsule {
   headline: string
   controller_support: string
 }
-interface FeaturedWin {
+interface FeaturedPlatform {
   id: number
   type: number
   name: string
@@ -66,44 +66,6 @@ interface FeaturedWin {
   header_image: string
   controller_support?: string
   discount_expiration?: number
-}
-interface FeaturedMac {
-  id: number
-  type: number
-  name: string
-  discounted: boolean
-  discount_percent: number
-  original_price?: number
-  final_price: number
-  currency: string
-  large_capsule_image: string
-  small_capsule_image: string
-  windows_available: boolean
-  mac_available: boolean
-  linux_available: boolean
-  streamingvideo_available: boolean
-  header_image: string
-  controller_support?: string
-  discount_expiration?: number
-}
-interface FeaturedLinux {
-  id: number
-  type: number
-  name: string
-  discounted: boolean
-  discount_percent: number
-  original_price?: number
-  final_price: number
-  currency: string
-  large_capsule_image: string
-  small_capsule_image: string
-  windows_available: boolean
-  mac_available: boolean
-  linux_available: boolean
-  streamingvideo_available: boolean
-  discount_expiration?: number
-  header_image: string
-  controller_support?: string
 }
 
 export const getFeatured = (): Promise<Featured> => 
@@ -156,76 +118,17 @@ interface Item1 {
 export interface Specials {
   id: string
   name: string
-  items: Item2[]
-}
-interface Item2 {
-  id: number
-  type: number
-  name: string
-  discounted: boolean
-  discount_percent: number
-  original_price: number
-  final_price: number
-  currency: string
-  large_capsule_image: string
-  small_capsule_image: string
-  windows_available: boolean
-  mac_available: boolean
-  linux_available: boolean
-  streamingvideo_available: boolean
-  discount_expiration: number
-  header_image: string
-  controller_support?: string
-  headline?: string
+  items: Item5[]
 }
 export interface ComingSoon {
   id: string
   name: string
-  items: Item3[]
-}
-interface Item3 {
-  id: number
-  type: number
-  name: string
-  discounted: boolean
-  discount_percent: number
-  original_price?: number
-  final_price: number
-  currency: string
-  large_capsule_image: string
-  small_capsule_image: string
-  windows_available: boolean
-  mac_available: boolean
-  linux_available: boolean
-  streamingvideo_available: boolean
-  header_image: string
-  discount_expiration?: number
-  controller_support?: string
+  items: Item5[]
 }
 export interface TopSellers {
   id: string
   name: string
-  items: Item4[]
-}
-interface Item4 {
-  id: number
-  type: number
-  name: string
-  discounted: boolean
-  discount_percent: number
-  original_price?: number
-  final_price: number
-  currency: string
-  large_capsule_image: string
-  small_capsule_image: string
-  windows_available: boolean
-  mac_available: boolean
-  linux_available: boolean
-  streamingvideo_available: boolean
-  header_image: string
-  controller_support?: string
-  headline?: string
-  discount_expiration?: number
+  items: Item5[]
 }
 export interface NewReleases {
   id: string
@@ -272,7 +175,7 @@ export interface AppResult {
 }
 
 export const search = (term: string): Promise<AppResult[]> =>
-  fetch(`/actions/SearchApps/${term}`).then(res => res.json());
+  fetch(`/api/search/${term}`).then(res => res.json());
 
 // App Details
 export interface AppDetails {
@@ -280,7 +183,7 @@ export interface AppDetails {
 }
 export interface AppDetail {
   success: boolean
-  data: Data
+  data?: Data
 }
 interface Data {
   type: string
@@ -403,7 +306,7 @@ interface ContentDescriptors {
 }
 
 export const getGameDetails = (appId: string | number): Promise<AppDetails> =>
-  fetch(`/api/appdetails?appids=${appId}`).then(res => res.json());
+  fetch(`/api/appdetails/${appId}`).then(res => res.json());
 
 
 // apps in category

@@ -87,9 +87,13 @@ app.get('/forecast', (req, res) => {
 
 // steam api calls
 app.get('/api/featured', cache('1 minute'), (req, res) => {
+  // get country code and language from request header
+  const accepted = req.headers['accept-language'].split(',')[0];
+  const country = accepted.split('-')[1];
+  const language = 'english';
   https.request({
     host: 'store.steampowered.com',
-    path: '/api/featured',
+    path: `/api/featured?cc=${country}&l=${language}`,
     method: 'GET'
   }, (response) => {
     let data = '';
@@ -103,9 +107,13 @@ app.get('/api/featured', cache('1 minute'), (req, res) => {
 });
 
 app.get('/api/featuredcategories', cache('1 minute'), (req, res) => {
+  const accepted = req.headers['accept-language'].split(',')[0];
+  const country = accepted.split('-')[1];
+  const language = 'english';
+
   https.request({
     host: 'store.steampowered.com',
-    path: '/api/featuredcategories',
+    path: `/api/featuredcategories?cc=${country}&l=${language}`,
     method: 'GET'
   }, (response) => {
     let data = '';
@@ -118,11 +126,53 @@ app.get('/api/featuredcategories', cache('1 minute'), (req, res) => {
   }).end();
 });
 
-app.get('/api/appdetails', cache('1 minute'), (req, res) => {
-  const appid = req.query.appids;
+app.get('/api/appdetails/:appid', cache('1 minute'), (req, res) => {
+  const appid = req.params.appid;
+  const accepted = req.headers['accept-language'].split(',')[0];
+  const country = accepted.split('-')[1];
+  const language = 'english';
   https.request({
     host: 'store.steampowered.com',
-    path: '/api/appdetails?appids=' + appid,
+    path: `/api/appdetails?cc=${country}&l=${language}&appids=${appid}`,
+    method: 'GET',
+  }, (response) => {
+    let data = '';
+    response.on('data', (chunk) => {
+      data += chunk;
+    });
+    response.on('end', () => {
+      res.send(data);
+    });
+  }).end();
+});
+
+app.get('api/trailerslideshow', (req, res) => {
+  const accepted = req.headers['accept-language'].split(',')[0];
+  const country = accepted.split('-')[1];
+  const language = 'english';
+  https.request({
+    host: 'store.steampowered.com',
+    path: `api/trailerslideshow/?cc=${country}&l=${language}`,
+    method: 'GET',
+  }, (response) => {
+    let data = '';
+    response.on('data', (chunk) => {
+      data += chunk;
+    });
+    response.on('end', () => {
+      res.send(data);
+    });
+  }).end();
+});
+
+app.get('/api/search/:query', (req, res) => {
+  const q = req.params.query;
+  const accepted = req.headers['accept-language'].split(',')[0];
+  const country = accepted.split('-')[1];
+  const language = 'english';
+  https.request({
+    host: 'store.steampowered.com',
+    path: `/actions/SearchApps/${q}?cc=${country}&l=${language}`,
     method: 'GET',
   }, (response) => {
     let data = '';

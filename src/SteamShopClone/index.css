@@ -6,3 +6,18 @@
 .mobile-transform {
   @apply -translate-y-full md:-translate-y-0;
 }
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  @apply w-2;
+}
+::-webkit-scrollbar-track {
+  @apply bg-steam-black;
+}
+::-webkit-scrollbar-thumb {
+  @apply bg-steam-grey;
+}
+
+body {
+  @apply overflow-y-scroll;
+}

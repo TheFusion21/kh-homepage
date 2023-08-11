@@ -312,7 +312,7 @@ const SubMenu = ({ menuEntry, onClick, isExpanded } : { menuEntry: MenuEntry, on
           onClick={handleClick}
         >
           {menuEntry.name}
-          <AiOutlineRight className="inline-block ml-2 w-5 h-5 transition-transform duration-300 text-white/50" style={{ transform: `rotate(${isExpanded ? 90 : 0}deg)` }} />
+          <AiOutlineRight className="inline-block ml-2 w-5 h-5 transition-transform motion-reduce:transition-none duration-300 text-white/50" style={{ transform: `rotate(${isExpanded ? 90 : 0}deg)` }} />
         </span>
       )}
       {menuEntry.subMenu && (
@@ -364,7 +364,7 @@ const CategoriesMenu = () => {
         onClick={() => setIsExpanded((prev) => !prev)}
       >
         Categories
-        <AiOutlineRight className="inline-block ml-2 w-5 h-5 transition-transform duration-300 text-white/50" style={{ transform: `rotate(${isExpanded ? 90 : 0}deg)` }} />
+        <AiOutlineRight className="inline-block ml-2 w-5 h-5 transition-transform motion-reduce:transition-none duration-300 text-white/50" style={{ transform: `rotate(${isExpanded ? 90 : 0}deg)` }} />
       </span>
       <AnimateHeight
         height={isExpanded ? 'auto' : 0}
@@ -404,13 +404,13 @@ const PageHeader = () => {
   }, [handleSearchClick]);
 
   return (
-    <header className="w-full md:bg-steam-black z-20 relative">
+    <header className="w-full md:bg-steam-black z-20 fixed">
       <ul className="w-full max-w-5xl flex flex-col md:h-16 md:flex-row md:mx-auto md:items-center md:shadow-lg">
         {/* Menu Button for mobile */}
         <li className="shadow-lg bg-steam-black text-steam-white z-10 h-12 md:h-16 md:shadow-none">
-          <ul className="flex flex-row items-center justify-start relative">
+          <ul className="flex flex-row items-center justify-start relative md:static">
             {/* Logo */}
-            <li className="absolute md:relative mx-auto left-0 right-0 top-0">
+            <li className="absolute md:static mx-auto left-0 right-0 top-0">
               <img
                 src="https://store.akamai.steamstatic.com/public/shared/images/responsive/header_logo.png"
                 alt="Steam Logo"
@@ -424,7 +424,7 @@ const PageHeader = () => {
             </li>
           </ul>
         </li>
-        <li className={`grow bg-steam-black text-steam-white transition-transform md:transition-none md:h-16 md:px-2 ${menuOpen ? 'mobile-transform' : ''}`}>
+        <li className={`grow bg-steam-black text-steam-white transition-transform md:transition-none motion-reduce:transition-none md:h-16 md:px-2 ${menuOpen ? '' : 'mobile-transform'}`}>
           <ul className="flex flex-col md:flex-row h-full items-stretch">
             <li className="flex flex-col">
               <Link to="/" className="py-2 px-4 hover:bg-white/10 font-semibold h-full flex items-center">
