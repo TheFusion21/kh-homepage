@@ -53,7 +53,8 @@
     "clean-dist": "rimraf public/apps/*",
     "lint": "eslint './src/**/*.{js,ts,tsx}' --quiet",
     "dev": "webpack --config=configs/webpack/dev.js --watch",
-    "prod": "yarn run build && node express.js"
+    "prod": "yarn run build && node express.js",
+    "start": "node api/express.js"
   },
   "dependencies": {
     "apicache": "^1.6.3",
