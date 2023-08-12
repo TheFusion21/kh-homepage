@@ -208,5 +208,3 @@ app.get('*', (req, res) => {
 app.listen(port, '::', () => {});
 
 console.log(process.env.WEATHER_API_KEY);
-
-module.exports = app;
