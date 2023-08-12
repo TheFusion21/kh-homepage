@@ -1,5 +1,18 @@
 # Portfolio Homepage
 
+## How to run
+```bash
+yarn install
+yarn build
+node express.js
+```
+## How to develop
+```bash
+yarn install
+yarn dev
+node express.js
+```
+express.js reloads the page on webpack rebuild
 ## React Apps
 
 ### Weather
