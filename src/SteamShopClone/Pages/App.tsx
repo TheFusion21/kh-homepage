@@ -96,6 +96,7 @@ const Home = () => {
               <h3 className="uppercase my-3 border-b border-steam-white/30 text-steam-white">
                 About This Game
               </h3>
+              {/* We know that html is safe here */}
               <p
                 dangerouslySetInnerHTML={{ __html: appDetails.data.about_the_game }}
                 className="whitespace-normal text-steam-white"
@@ -104,6 +105,7 @@ const Home = () => {
                 System Requirements
               </h3>
               <div className="grid grid-cols-2 gap-2 mt-2 text-steam-white text-sm">
+                {/* We know that html is safe here */}
                 {currentPlatform === 'windows' && (
                   <>
                     <p dangerouslySetInnerHTML={{ __html: appDetails.data.pc_requirements.minimum }} />

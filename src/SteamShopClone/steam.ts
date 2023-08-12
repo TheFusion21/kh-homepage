@@ -175,7 +175,7 @@ export interface AppResult {
 }
 
 export const search = (term: string): Promise<AppResult[]> =>
-  fetch(`/api/search/${term}`).then(res => res.json());
+  fetch(`/api/search/${encodeURIComponent(term)}`).then(res => res.json());
 
 // App Details
 export interface AppDetails {

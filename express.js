@@ -180,9 +180,10 @@ app.get('/api/search/:query', (req, res) => {
   const accepted = req.headers['accept-language'].split(',')[0];
   const country = accepted.split('-')[1];
   const language = 'english';
+  console.log(`/actions/SearchApps/${encodeURIComponent(q)}?cc=${country}&l=${language}`);
   https.request({
-    host: 'store.steampowered.com',
-    path: `/actions/SearchApps/${q}?cc=${country}&l=${language}`,
+    host: 'steamcommunity.com',
+    path: `/actions/SearchApps/${encodeURIComponent(q)}?cc=${country}&l=${language}`,
     method: 'GET',
   }, (response) => {
     let data = '';
