@@ -26,16 +26,16 @@ app.use(cors());
 app.use(express.static(path.join(__dirname, '../public')));
 
 //website
-app.get('/apps/weather', (req, res) => {
+app.get('/apps/weather', cache('1 minute'), (req, res) => {
   res.sendFile(path.join(__dirname, '../public/apps/weather.html'));
 });
-app.get('/apps/ssc', (req, res) => {
+app.get('/apps/ssc', cache('1 minute'), (req, res) => {
   res.sendFile(path.join(__dirname, '../public/apps/ssc.html'));
 });
-app.get('/apps/ssc/*', (req, res) => {
+app.get('/apps/ssc/*', cache('1 minute'), (req, res) => {
   res.sendFile(path.join(__dirname, '../public/apps/ssc.html'));
 });
-app.get('/imprint', (req, res) => {
+app.get('/imprint', cache('1 hour'), (req, res) => {
   res.sendFile(path.join(__dirname, '../public/imprint.html'));
 });
 
@@ -198,7 +198,7 @@ app.get('/api/search/:query', (req, res) => {
 });
 
 // redirect everything else to index.html
-app.get('*', (req, res) => {
+app.get('*', cache('1 hour'), (req, res) => {
   res.redirect('/');
 });
 
