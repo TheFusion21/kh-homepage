@@ -14,7 +14,7 @@ const port = process.env.PORT || 3000;
 let cache = apicache.middleware;
 // live reload
 const liveReloadServer = livereload.createServer();
-liveReloadServer.watch(path.join(__dirname, '/public'));
+liveReloadServer.watch(path.join(__dirname, 'public'));
 liveReloadServer.server.once('connection', () => {
   setTimeout(() => {
     liveReloadServer.refresh('/');
@@ -23,20 +23,19 @@ liveReloadServer.server.once('connection', () => {
 
 app.use(connectLiveReload());
 app.use(cors());
-app.use(express.static(path.join(__dirname, '../public')));
 
 //website
-app.get('/apps/weather', cache('1 minute'), (req, res) => {
-  res.sendFile(path.join(__dirname, '../public/apps/weather.html'));
+app.get('/apps/weather', (req, res) => {
+  res.sendFile(path.join(__dirname, '/public/apps/weather.html'));
 });
-app.get('/apps/ssc', cache('1 minute'), (req, res) => {
-  res.sendFile(path.join(__dirname, '../public/apps/ssc.html'));
+app.get('/apps/ssc', (req, res) => {
+  res.sendFile(path.join(__dirname, '/public/apps/ssc.html'));
 });
-app.get('/apps/ssc/*', cache('1 minute'), (req, res) => {
-  res.sendFile(path.join(__dirname, '../public/apps/ssc.html'));
+app.get('/apps/ssc/*', (req, res) => {
+  res.sendFile(path.join(__dirname, '/public/apps/ssc.html'));
 });
-app.get('/imprint', cache('1 hour'), (req, res) => {
-  res.sendFile(path.join(__dirname, '../public/imprint.html'));
+app.get('/imprint', (req, res) => {
+  res.sendFile(path.join(__dirname, '/public/imprint.html'));
 });
 
 // weather api calls
@@ -197,12 +196,15 @@ app.get('/api/search/:query', (req, res) => {
   }).end();
 });
 
+
+// serve static files
+app.use(express.static(path.join(__dirname, 'public')));
 // redirect everything else to index.html
-app.get('*', cache('1 hour'), (req, res) => {
+app.get('*', (req, res) => {
   res.redirect('/');
 });
 
 // start server on ipv4 and ipv6
 app.listen(port, '::', () => {});
 
-module.exports = app;
+console.log(process.env.WEATHER_API_KEY)
