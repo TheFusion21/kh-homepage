@@ -196,6 +196,9 @@ app.get('/api/search/:query', (req, res) => {
   }).end();
 });
 
+app.get('/health', (req, res) => {
+  res.send('OK');
+});
 
 // serve static files
 app.use(express.static(path.join(__dirname, 'public')));
