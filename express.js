@@ -180,7 +180,6 @@ app.get('/api/search/:query', (req, res) => {
   const accepted = req.headers['accept-language'].split(',')[0];
   const country = accepted.split('-')[1];
   const language = 'english';
-  console.log(`/actions/SearchApps/${encodeURIComponent(q)}?cc=${country}&l=${language}`);
   https.request({
     host: 'steamcommunity.com',
     path: `/actions/SearchApps/${encodeURIComponent(q)}?cc=${country}&l=${language}`,
@@ -209,5 +208,3 @@ app.get('*', (req, res) => {
 
 // start server on ipv4 and ipv6
 app.listen(port, '::', () => {});
-
-console.log(process.env.WEATHER_API_KEY);

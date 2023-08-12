@@ -179,7 +179,6 @@ const App = () => {
       } : null,
       visibility: forecastBefore.visibility + (forecastAfter.visibility - forecastBefore.visibility) * (forecastSlider - forecastBefore.dt) / (forecastAfter.dt - forecastBefore.dt),
     };
-    console.log(forecastInterpolated);
     return forecastInterpolated;
   }, [forecastSlider, forecast]);
 

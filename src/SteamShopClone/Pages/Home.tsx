@@ -64,7 +64,6 @@ const HomeFeatured = ({ featured }: { featured: Featured }) => {
           return;
         }
         setAppDetails((prev) => ({ ...prev, [item.id]: data[item.id] }));
-        console.log(data[item.id]);
       });
     });
   }, [featuredFromPlatform]);
