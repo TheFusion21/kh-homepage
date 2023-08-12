@@ -27,16 +27,16 @@ app.use(express.static(path.join(__dirname, '/public')));
 
 //website
 app.get('/apps/weather', (req, res) => {
-  res.sendFile(path.join(__dirname, '/public/apps/weather.html'));
+  res.sendFile(path.join(__dirname, '../public/apps/weather.html'));
 });
 app.get('/apps/ssc', (req, res) => {
-  res.sendFile(path.join(__dirname, '/public/apps/ssc.html'));
+  res.sendFile(path.join(__dirname, '../public/apps/ssc.html'));
 });
 app.get('/apps/ssc/*', (req, res) => {
-  res.sendFile(path.join(__dirname, '/public/apps/ssc.html'));
+  res.sendFile(path.join(__dirname, '../public/apps/ssc.html'));
 });
 app.get('/imprint', (req, res) => {
-  res.sendFile(path.join(__dirname, '/public/imprint.html'));
+  res.sendFile(path.join(__dirname, '../public/imprint.html'));
 });
 
 // weather api calls
