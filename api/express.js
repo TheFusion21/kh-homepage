@@ -23,6 +23,7 @@ liveReloadServer.server.once('connection', () => {
 
 app.use(connectLiveReload());
 app.use(cors());
+app.use(express.static(path.join(__dirname, '/public')));
 
 //website
 app.get('/apps/weather', (req, res) => {
@@ -196,9 +197,6 @@ app.get('/api/search/:query', (req, res) => {
   }).end();
 });
 
-
-// serve static files
-app.use(express.static(path.join(__dirname, 'public')));
 // redirect everything else to index.html
 app.get('*', (req, res) => {
   res.redirect('/');
