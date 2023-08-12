@@ -1,5 +1,5 @@
-import React, { useCallback, useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import React, { useCallback, useEffect, useState } from 'react';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import {
   AiOutlineSearch,
   AiOutlineMenu,
@@ -338,7 +338,23 @@ const SubMenu = ({ menuEntry, onClick, isExpanded } : { menuEntry: MenuEntry, on
 const CategoriesMenu = () => {
   const [isExpanded, setIsExpanded] = useState(false);
   const [subMenuOpen, setSubMenuOpen] = useState<boolean[]>([...Array(menuStructure.length)].map(() => false));
+  // close all menus when the menu is closed
+  useEffect(() => {
+    if (!isExpanded) {
+      setSubMenuOpen((prev) => {
+        const copy = [...prev];
+        copy.fill(false);
+        return copy;
+      });
+    }
+  }, [isExpanded]);
 
+  // we need to close the menu when the user navigates away
+  const location = useLocation();
+  useEffect(() => {
+    setIsExpanded(false);
+  }, [location]);
+  
   const handleSubMenuClick = useCallback((index: number, o: boolean) => {
     if (!o) {
       setSubMenuOpen((prev) => {
@@ -390,6 +406,10 @@ const PageHeader = () => {
   const [search, setSearch] = useState('');
   const [menuOpen, setMenuOpen] = useState(false);
   const navigate = useNavigate();
+  // we need to close the menu when the user navigates away
+  useEffect(() => {
+    setMenuOpen(false);
+  }, [location]);
 
   const handleSearchClick = useCallback(() => {
     if (search) {

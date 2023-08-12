@@ -1,25 +1,24 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useState, useRef } from 'react';
 import {
   getFeatured,
   getFeaturedCategories,
-  TopSellers,
   Featured,
   FeaturedCategories,
   AppDetail,
   getGameDetails,
-  ComingSoon,
+  Category,
 } from 'SteamShopClone/steam';
 import {
   AiFillWindows,
   AiFillApple,
 } from 'react-icons/ai';
-import { Link } from 'react-router-dom';
+import { Link, ScrollRestoration } from 'react-router-dom';
 import AnimateHeight from 'react-animate-height';
 
 const HomeFeatured = ({ featured }: { featured: Featured }) => {
   const [slideIndex, setSlideIndex] = useState(0);
   const [slideWidth, setSlideWidth] = useState(0);
-  const slideRef = React.useRef<HTMLDivElement>(null);
+  const slideRef = useRef<HTMLDivElement>(null);
   const [appDetails, setAppDetails] = useState<Record<number, AppDetail>>({});
   const [isMouseOver, setIsMouseOver] = useState(false);
 
@@ -88,14 +87,16 @@ const HomeFeatured = ({ featured }: { featured: Featured }) => {
         FEATURED & RECOMMENDED
       </h1>
       {/* Slide Show */}
-      <div className="overflow-hidden">
+      <div
+        className="overflow-hidden"
+        onMouseEnter={() => setIsMouseOver(true)}
+        onMouseLeave={() => setIsMouseOver(false)}
+      >
         <div className="w-full flex flex-nowrap transition-transform motion-reduce:transition-none duration-1000" ref={slideRef} style={{ transform: `translateX(-${slideIndex * slideWidth}px)` }}>
           {featuredFromPlatform.map((item) => (
             <Link
               to={`/app/${item.id}`}
               className="min-w-full min-h-full flex flex-col md:flex-row" key={item.id}
-              onMouseEnter={() => setIsMouseOver(true)}
-              onMouseLeave={() => setIsMouseOver(false)}
             >
               <div  className="md:basis-3/4">
                 <img src={item.large_capsule_image} alt={item.name} className="h-full w-full object-contain" />
@@ -149,7 +150,7 @@ const HomeFeatured = ({ featured }: { featured: Featured }) => {
       <div className="flex flex-row justify-center py-3">
         {featuredFromPlatform.map((item, index) => (
           <button
-            className={`w-5 h-3 rounded-md mx-1 transition-colors duration-500 ${index === slideIndex ? 'bg-white/50' : 'bg-white/20'}`}
+            className={`w-4 h-3 rounded-sm mx-1 transition-colors motion-reduce:transition-none duration-500 ${index === slideIndex ? 'bg-white/50' : 'bg-white/20'}`}
             key={item.id}
             onClick={() => setSlideIndex(index)}
           />
@@ -160,8 +161,8 @@ const HomeFeatured = ({ featured }: { featured: Featured }) => {
 };
 
 const HomeFeaturedCategories = ({ featuredCategories }: { featuredCategories: FeaturedCategories }) => {
-  const [tab, setTab] = React.useState<'specials' | 'coming_soon' | 'top_sellers' | 'new_releases'>('specials');
-  const [hoverIndex, setHoverIndex] = React.useState<number | null>(null);
+  const [tab, setTab] = useState<'specials' | 'coming_soon' | 'top_sellers' | 'new_releases'>('specials');
+  const [hoverIndex, setHoverIndex] = useState<number | null>(null);
   const [appDetails, setAppDetails] = useState<Record<number, AppDetail>>({});
 
   const items = useMemo((): typeof featuredCategories.coming_soon.items => {
@@ -217,16 +218,34 @@ const HomeFeaturedCategories = ({ featuredCategories }: { featuredCategories: Fe
                 </h2>
                 <div className="grow" />
                 <div className="flex">
-                  <div className="w-16 bg-steam-green2 text-steam-green font-semibold text-2xl flex items-center justify-center">
-                    -{item.discount_percent}%
-                  </div>
-                  <div className="w-16 flex flex-col items-end px-2 justify-center bg-steam-grey">
-                    <p className="text-xs line-through font-light text-steam-white">
-                      {Intl.NumberFormat(undefined, { style: 'currency', currency: item.currency }).format(item.original_price / 100)}
-                    </p>
-                    <p className="text-sm text-steam-green font-light">
-                      {Intl.NumberFormat(undefined, { style: 'currency', currency: item.currency }).format(item.final_price / 100)}
-                    </p>
+                  <div className="flex flex-row items-center justify-start">
+                    {item.discounted ? (
+                      <div className="flex">
+                          <div className="w-16 bg-steam-green2 text-steam-green font-semibold text-2xl flex items-center justify-center">
+                            -{item.discount_percent}%
+                          </div>
+                          <div className="w-16 flex flex-col items-end px-2 justify-center bg-steam-grey">
+                            <p className="text-xs line-through font-light">
+                              {Intl.NumberFormat(undefined, { style: 'currency', currency: item.currency }).format(item.original_price / 100)}
+                            </p>
+                            <p className="text-sm text-steam-green font-light">
+                              {Intl.NumberFormat(undefined, { style: 'currency', currency: item.currency }).format(item.final_price / 100)}
+                            </p>
+                          </div>
+                      </div> 
+                    ) : (
+                      <div>
+                        <p className="text-sm font-light">
+                          {tab === 'coming_soon' ? (
+                            'Coming Soon'
+                          ) : (item.final_price === 0 ? (
+                            'Free to Play'
+                          ) : (
+                            Intl.NumberFormat(undefined, { style: 'currency', currency: item.currency }).format(item.final_price / 100)
+                          ))}
+                        </p>
+                      </div>
+                    )}
                   </div>
               </div> 
               </div>
@@ -262,9 +281,127 @@ const HomeFeaturedCategories = ({ featuredCategories }: { featuredCategories: Fe
   );
 };
 
+const HomeCategories = () => {
+  const [slideIndex, setSlideIndex] = useState(0);
+  const [slideWidth, setSlideWidth] = useState(0);
+  const slideRef = useRef<HTMLDivElement>(null);
+  const [splitCount, setSplitCount] = useState(4);
+  const [isMouseOver, setIsMouseOver] = useState(false);
+
+  const categories: Category[] = [
+    'puzzle_matching',
+    'exploration_open_world',
+    'rogue_like_rogue_lite',
+    'action',
+
+    'horror',
+    'science_fiction',
+    'sports',
+    'anime',
+
+    'survival',
+    'casual',
+    'rpg',
+    'adventure',
+
+    'story_rich',
+    'visual_novel',
+    'racing',
+    'strategy_cities_settlements',
+
+    'simulation',
+    'fighting_martial_arts',
+    'strategy',
+    'puzzle_matching',
+  ];
+
+  useEffect(() => {
+    const calcSplitCount = () => {
+      let sp = 4;
+      if (matchMedia('(max-width: 768px)').matches) {
+        sp = 2;
+      }
+      setSplitCount(sp);
+    }
+    calcSplitCount();
+    window.addEventListener('resize', calcSplitCount);
+    return () => window.removeEventListener('resize', calcSplitCount);
+  }, []);
+
+  const groups = useMemo(() => {
+    // split into groups of 4
+    const g = [];
+    for (let i = 0; i < categories.length; i += splitCount) {
+      g.push(categories.slice(i, i + splitCount));
+    }
+    return g;
+  }, [splitCount])
+
+  useEffect(() => {
+    const calcSlideWidth = () => {
+      if (slideRef.current) {
+        setSlideWidth(slideRef.current.scrollWidth / groups.length);
+      }
+    }
+    calcSlideWidth();
+    window.addEventListener('resize', calcSlideWidth);
+    return () => window.removeEventListener('resize', calcSlideWidth);
+  }, [slideRef, groups]);
+
+  useEffect(() => {
+    if (isMouseOver) {
+      return;
+    }
+    const interval = setInterval(() => {
+      setSlideIndex((prev) => (prev + 1) % groups.length);
+    }, 5000);
+    
+    return () => clearInterval(interval);
+  }, [groups, isMouseOver, slideIndex]);
+
+  
+
+  return (
+    <div className="w-full max-w-5xl mx-auto">
+      <h1 className="text-2xl text-center mt-2 text-steam-white shadow-black text-shadow-sm uppercase">
+        FEATURED & RECOMMENDED
+      </h1>
+      <div
+        className="overflow-hidden py-3"
+        onMouseEnter={() => setIsMouseOver(true)}
+        onMouseLeave={() => setIsMouseOver(false)}
+      >
+        <div className="w-full flex flex-nowrap transition-transform motion-reduce:transition-none duration-1000" ref={slideRef} style={{ transform: `translateX(-${slideIndex * slideWidth}px)` }}>
+          {groups.map((group, i) => (
+            <div className="min-w-full grid grid-cols-2 md:grid-cols-4" key={i}>
+              {group.map((category) => (
+                <Link key={category} to={`/category/${category}`} className="min-w-1/4 shrink-0 hover:scale-110 transition-transform motion-reduce:transition-none z-10">
+                  <div className="px-1">
+                    <img src={`https://store.steampowered.com/categories/homepageimage/category/${category}?cc=us&l=english`} alt={category} />
+                  </div>
+                </Link>
+              ))}
+            </div>
+          ))}
+        </div>
+      </div>
+      {/* Slide Show Buttons */}
+      <div className="flex flex-row justify-center py-3">
+        {groups.map((item, index) => (
+          <button
+            className={`w-4 h-3 rounded-sm mx-1 transition-colors motion-reduce:transition-none duration-500 ${index === slideIndex ? 'bg-white/50' : 'bg-white/20'}`}
+            key={item.id}
+            onClick={() => setSlideIndex(index)}
+          />
+        ))}
+      </div>
+    </div>
+  )
+};
+
 const Home = () => {
-  const [featured, setFeatured] = React.useState<Featured | null>(null);
-  const [featuredCategories, setFeaturedCategories] = React.useState<FeaturedCategories | null>(null);
+  const [featured, setFeatured] = useState<Featured | null>(null);
+  const [featuredCategories, setFeaturedCategories] = useState<FeaturedCategories | null>(null);
 
 
   useEffect(() => {
@@ -277,7 +414,7 @@ const Home = () => {
   }, []);
 
   if (!featured || !featuredCategories) {
-    return <div>Loading...</div>;
+    return <div className="bg-steam-back min-h-screen">Loading...</div>;
   }
   return (
     <div className="flex flex-col items-center justify-center w-full bg-steam-back">
@@ -285,6 +422,9 @@ const Home = () => {
       <HomeFeatured featured={featured} />
       {/* Featured Categories */}
       <HomeFeaturedCategories featuredCategories={featuredCategories} />
+      {/* Categories */}
+      <HomeCategories />
+      <ScrollRestoration />
     </div>
   );
 };

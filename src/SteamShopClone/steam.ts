@@ -1,5 +1,5 @@
 
-export const Categories: string[] = [
+export const Categories = [
   'action', 'arcade_rhythm', 'action_fps', 'hack_and_slash', 'fighting_martial_arts', 'action_run_jump', 'shump', 'action_tps',
   'adventure', 'adventure_rpg', 'casual', 'story_rich', 'metroidvania', 'puzzle_matching', 'visual_novel', 'hidden_object',
   'rpg', 'adventure_rpg', 'rpg_action', 'rpg_party_based', 'rpg_jrpg', 'rogue_like_rogue_lite', 'rpg_turn_based', 'rpg_strategy_tactics',
@@ -8,7 +8,7 @@ export const Categories: string[] = [
   'sports_and_racing', 'sports', 'sports_fishing_hunting', 'sports_individual', 'sports_team', 'racing', 'racing_sim', 'sports_sim',
   'anime', 'horror', 'mystery_detective', 'exploration_open_world', 'science_fiction', 'survival', 'space',
   'singleplayer', 'multiplayer_coop', 'multiplayer_lan', 'multiplayer_local', 'multiplayer_local_party', 'multiplayer_mmo', 'multiplayer', 'multiplayer_online_competitive',
-];
+] as const;
 
 export type Category = typeof Categories[number];
 
@@ -212,7 +212,7 @@ interface Data {
   categories: AppCategory[]
   genres: AppGenre[]
   screenshots: Screenshot[]
-  movies: Movie[]
+  movies?: Movie[]
   recommendations: Recommendations
   achievements: Achievements
   release_date: ReleaseDate
@@ -220,6 +220,16 @@ interface Data {
   background: string
   background_raw: string
   content_descriptors: ContentDescriptors
+  price_overview?: PriceOverview
+  legal_notice?: string
+}
+interface PriceOverview {
+  currency: string
+  initial: number
+  final: number
+  discount_percent: number
+  initial_formatted: string
+  final_formatted: string
 }
 interface Requirements {
   minimum: string

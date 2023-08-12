@@ -21,3 +21,11 @@
 body {
   @apply overflow-y-scroll;
 }
+
+.content-slider {
+  @apply appearance-none h-3 bg-steam-black;
+}
+.content-slider::-webkit-slider-thumb {
+  appearance: none;
+  @apply h-3 w-8 rounded-sm bg-white/10 hover:bg-white/20;
+}

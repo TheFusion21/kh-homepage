@@ -141,7 +141,17 @@ app.get('/api/appdetails/:appid', cache('1 minute'), (req, res) => {
       data += chunk;
     });
     response.on('end', () => {
+      // check if data is json
+      try {
+        JSON.parse(data);
+      } catch (e) {
+        res.status(500).send('Internal Server Error');
+        return;
+      }
       res.send(data);
+    });
+    response.on('error', (err) => {
+      res.send(err);
     });
   }).end();
 });
