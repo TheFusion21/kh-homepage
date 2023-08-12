@@ -207,4 +207,6 @@ app.get('*', (req, res) => {
 // start server on ipv4 and ipv6
 app.listen(port, '::', () => {});
 
-console.log(process.env.WEATHER_API_KEY)
+console.log(process.env.WEATHER_API_KEY);
+
+module.exports = app;
