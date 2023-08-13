@@ -8,6 +8,7 @@ const connectLiveReload = require("connect-livereload");
 const https = require('https');
 const cors = require('cors');
 const apicache = require('apicache');
+const compression = require('compression');
 const app = express();
 const port = process.env.PORT || 3000;
 
@@ -25,6 +26,10 @@ if (!process.env.RENDER) {
   app.use(connectLiveReload());
 }
 app.use(cors());
+app.use(compression({
+  threshold: 0
+}));
+app.use(express.static(path.join(__dirname, 'public')));
 
 //website
 app.get('/apps/weather', (req, res) => {
@@ -201,8 +206,7 @@ app.get('/health', (req, res) => {
   res.send('OK');
 });
 
-// serve static files
-app.use(express.static(path.join(__dirname, 'public')));
+
 // redirect everything else to index.html
 app.get('*', (req, res) => {
   res.redirect('/');
