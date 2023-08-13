@@ -26,9 +26,6 @@ if (!process.env.RENDER) {
   app.use(connectLiveReload());
 }
 app.use(cors());
-app.use(compression({
-  threshold: 0
-}));
 app.use(express.static(path.join(__dirname, 'public')));
 
 //website
