@@ -13,15 +13,17 @@ const port = process.env.PORT || 3000;
 
 let cache = apicache.middleware;
 // live reload
-const liveReloadServer = livereload.createServer();
-liveReloadServer.watch(path.join(__dirname, 'public'));
-liveReloadServer.server.once('connection', () => {
-  setTimeout(() => {
-    liveReloadServer.refresh('/');
-  }, 100);
-});
+if (!process.env.RENDER) {
+  const liveReloadServer = livereload.createServer();
+  liveReloadServer.watch(path.join(__dirname, 'public'));
+  liveReloadServer.server.once('connection', () => {
+    setTimeout(() => {
+      liveReloadServer.refresh('/');
+    }, 100);
+  });
 
-app.use(connectLiveReload());
+  app.use(connectLiveReload());
+}
 app.use(cors());
 
 //website
