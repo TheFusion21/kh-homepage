@@ -64,8 +64,7 @@
     "cors": "^2.8.5",
     "dotenv": "^16.3.1",
     "https": "^1.0.0",
-    "livereload": "^0.9.3",
-    "steamapi": "^2.4.2"
+    "livereload": "^0.9.3"
   },
   "engines": {
     "node": ">=16.13.0"
