@@ -5,6 +5,7 @@ import Layout from './Pages/Layout';
 import Home from './Pages/Home';
 import App from './Pages/App';
 import Search from './Pages/Search';
+import Genre from './Pages/Genre';
 import { createBrowserRouter, createRoutesFromElements, Route, RouterProvider } from 'react-router-dom';
 
 
@@ -14,6 +15,8 @@ const router = createBrowserRouter(
       <Route index element={<Home />} />
       <Route path="app/:appId" element={<App />} />
       <Route path="search/:query" element={<Search />} />
+      <Route path="genre/:genre" element={<Genre />} />
+
     </Route>
   ),
   {

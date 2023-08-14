@@ -24,7 +24,7 @@ const App = () => {
   // get geocoding from search
   useEffect(() => {
     if (debouncedSearch) {
-      fetch(`/direct?q=${debouncedSearch}`)
+      fetch(`/api/weather/direct?q=${debouncedSearch}`)
         .then((res) => res.json())
         .then((data) => {
           setLocations(data);
@@ -35,12 +35,12 @@ const App = () => {
   // get weather from location
   useEffect(() => {
     if (location) {
-      fetch(`/weather?lat=${location.latitude}&lon=${location.longitude}`)
+      fetch(`/api/weather/weather?lat=${location.latitude}&lon=${location.longitude}`)
         .then((res) => res.json())
         .then((data) => {
           setWeather(data as Weather);
         });
-      fetch(`/forecast?lat=${location.latitude}&lon=${location.longitude}`)
+      fetch(`/api/weather/forecast?lat=${location.latitude}&lon=${location.longitude}`)
         .then((res) => res.json())
         .then((data) => {
           setForecast(data as Forecast);
