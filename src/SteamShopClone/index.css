@@ -18,10 +18,6 @@
   @apply bg-steam-grey;
 }
 
-body {
-  @apply overflow-y-scroll;
-}
-
 .content-slider {
   @apply appearance-none h-3 bg-steam-black;
 }

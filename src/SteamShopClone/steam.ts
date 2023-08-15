@@ -1,11 +1,11 @@
 export const getFeaturedGames = (): Promise<FeaturedGames> => 
-  fetch('/api/steam/featuredgames').then(res => res.json());
+  fetch('/api/steam/featuredgames').then(res => res.json())
 
-export const getFeaturedCategories = (): Promise<FeaturedCategories[]> =>
+export const getFeaturedCategories = (): Promise<FeaturedCategories> =>
   fetch('/api/steam/featuredcategories').then(res => res.json());
 
 export const getGameDetails = (id: number): Promise<GameDetails> =>
-  fetch(`/api/steam/gamedetails/${id}`).then(res => res.json());
+  fetch(`/api/steam/gamedetails/${id}`).then(res => res.json()).then(res => res[id]);
 
 export const getGameNews = (id: number): Promise<GameNews[]> =>
   fetch(`/api/steam/gamenews/${id}`).then(res => res.json());
@@ -118,29 +118,50 @@ export interface FeaturedGames {
 }
 
 export interface FeaturedCategory {
-  id: number;
-  type: number;
-  discounted: boolean;
-  currency: Currency;
-  original_price: number;
-  final_price: number;
-  discount_percent: number;
+  id: string;
   name: string;
-  header_image: string;
-  purchase_package: number;
+  items: {
+    id: number;
+    type: number;
+    discounted: boolean;
+    currency: Currency;
+    original_price: number;
+    final_price: number;
+    discount_percent: number;
+    name: string;
+    header_image: string;
+    purchase_package: number;
+  }[];
+  
 }
 
 export interface FeaturedSpotlight {
+  id: string;
   name: string;
-  header_image: string;
-  body: string;
-  url: string;
+  items: {
+    name: string;
+    header_image: string;
+    body: string;
+    url: string;
+  }[];
+  
 }
 
 export interface FeaturedCategories {
-  id: string;
-  name: string;
-  items: FeaturedCategory[] | FeaturedSpotlight[];
+  '0': FeaturedSpotlight;
+  '1': FeaturedSpotlight;
+  '2': FeaturedSpotlight;
+  '3': FeaturedSpotlight;
+  '4': FeaturedSpotlight;
+  '5': FeaturedSpotlight;
+  '6': FeaturedSpotlight;
+  specials: FeaturedCategory;
+  coming_soon: FeaturedCategory;
+  top_sellers: FeaturedCategory;
+  new_releases: FeaturedCategory;
+  trailerslideshow: any;
+  genres: any;
+  status: number;
 }
 
 export interface Requirements {

@@ -49,7 +49,7 @@ const request = (path, host) =>
 
 
 router.get('/featuredgames', cache('10 minutes'), (req, res) => {
-  request('/featured/', store).then((data) => {
+  request('/api/featured', store).then((data) => {
     res.send(data);
   }).catch((err) => {
     res.status(500).send(err.toString());
@@ -57,7 +57,7 @@ router.get('/featuredgames', cache('10 minutes'), (req, res) => {
 });
 
 router.get('/featuredcategories', cache('10 minutes'), (req, res) => {
-  request('/featuredcategories', store).then((data) => {
+  request('/api/featuredcategories', store).then((data) => {
     res.send(data);
   }).catch((err) => {
     res.status(500).send(err.toString());
@@ -65,7 +65,7 @@ router.get('/featuredcategories', cache('10 minutes'), (req, res) => {
 });
 
 router.get('/gamedetails/:appid', cache('10 minutes'), (req, res) => {
-  request(`/appdetails/?appids=${req.params.appid}`, api).then((data) => {
+  request(`/api/appdetails/?appids=${req.params.appid}`, store).then((data) => {
     res.send(data);
   }).catch((err) => {
     res.status(500).send(err.toString());
@@ -104,7 +104,7 @@ router.get('/gamereviews/:appid', (req, res) => {
   const playtime_filter_max = req.body.playtime_filter_max || 0;
   const filter_offtopic_activity = req.body.filter_offtopic_activity || 0;
 
-  const path = `/appreviews/${req.params.appid}?json=1&start_date=${start_date}&end_date=${end_date}&date_range_type=${date_range_type}&filter=${filter}&language=${language}&review_type=${review_type}&purchase_type=${purchase_type}&playtime_filter_min=${playtime_filter_min}&playtime_filter_max=${playtime_filter_max}&filter_offtopic_activity=${filter_offtopic_activity}`;
+  const path = `/api/appreviews/${req.params.appid}?json=1&start_date=${start_date}&end_date=${end_date}&date_range_type=${date_range_type}&filter=${filter}&language=${language}&review_type=${review_type}&purchase_type=${purchase_type}&playtime_filter_min=${playtime_filter_min}&playtime_filter_max=${playtime_filter_max}&filter_offtopic_activity=${filter_offtopic_activity}`;
   
   request(path, store).then((data) => {
     res.send(data);
@@ -114,7 +114,7 @@ router.get('/gamereviews/:appid', (req, res) => {
 });
 
 router.get('/gamehover/:appid', cache('10 minutes'), (req, res) => {
-  request(`/apphoverpublic/${req.params.appid}?json=1`, store).then((data) => {
+  request(`/api/apphoverpublic/${req.params.appid}?json=1`, store).then((data) => {
     res.send(data);
   }).catch((err) => {
     res.status(500).send(err.toString());
@@ -122,7 +122,7 @@ router.get('/gamehover/:appid', cache('10 minutes'), (req, res) => {
 });
 
 router.get('/appsingenre/:genre', cache('10 minutes'), (req, res) => {
-  request(`/getappsingenre/?genre=${req.params.genre}`, store).then((data) => {
+  request(`/api/getappsingenre/?genre=${req.params.genre}`, store).then((data) => {
     res.send(data);
   }).catch((err) => {
     res.status(500).send(err.toString());
@@ -134,7 +134,7 @@ router.get('/appsingenre/:genre', cache('10 minutes'), (req, res) => {
 //cat_comingsoon
 //cat_specials
 router.get('/appsincategory/:category', cache('10 minutes'), (req, res) => {
-  request(`/getappsincategory/?category=${req.params.category}`, store).then((data) => {
+  request(`/api/getappsincategory/?category=${req.params.category}`, store).then((data) => {
     res.send(data);
   }).catch((err) => {
     res.status(500).send(err.toString());
