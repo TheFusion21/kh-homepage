@@ -11,7 +11,7 @@ const app = express();
 const port = process.env.PORT || 3000;
 
 const weather = require('./routes/weather');
-const steam = require('./routes/steam');
+const instaclone = require('./routes/instaclone');
 
 // live reload
 if (!process.env.RENDER) {
@@ -28,17 +28,17 @@ if (!process.env.RENDER) {
 app.use(cors());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use('/api/weather', weather);
-app.use('/api/steam', steam);
+app.use('/api/instaclone', instaclone);
 
 //website
 app.get('/apps/weather', (req, res) => {
   res.sendFile(path.join(__dirname, '/public/apps/weather.html'));
 });
-app.get('/apps/ssc', (req, res) => {
-  res.sendFile(path.join(__dirname, '/public/apps/ssc.html'));
+app.get('/apps/insta', (req, res) => {
+  res.sendFile(path.join(__dirname, '/public/apps/instaclone.html'));
 });
-app.get('/apps/ssc/*', (req, res) => {
-  res.sendFile(path.join(__dirname, '/public/apps/ssc.html'));
+app.get('/apps/insta/*', (req, res) => {
+  res.sendFile(path.join(__dirname, '/public/apps/instaclone.html'));
 });
 app.get('/imprint', (req, res) => {
   res.sendFile(path.join(__dirname, '/public/imprint.html'));

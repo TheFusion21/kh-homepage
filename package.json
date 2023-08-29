@@ -59,7 +59,6 @@
   "dependencies": {
     "apicache": "^1.6.3",
     "body-parser": "^1.20.2",
-    "compression": "^1.7.4",
     "connect-livereload": "^0.6.1",
     "cors": "^2.8.5",
     "dotenv": "^16.3.1",

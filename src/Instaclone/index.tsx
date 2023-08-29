@@ -1,20 +1,22 @@
 import React from 'react';
 import * as Dom from 'react-dom/client';
 import './index.css';
-import Layout from './Pages/Layout';
-import Home from './Pages/Home';
-import { createBrowserRouter, createRoutesFromElements, Route, RouterProvider } from 'react-router-dom';
-
+import Home from './Home';
+import FullPost from './FullPost';
+import FullUser from './FullUser';
+import Layout from './Layout';
+import { Route, RouterProvider, createBrowserRouter, createRoutesFromElements } from 'react-router-dom';
 
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path="/" element={<Layout />}>
       <Route index element={<Home />} />
-
+      <Route path="post/:postId" element={<FullPost />} />
+      <Route path="/:userId" element={<FullUser />} />
     </Route>
   ),
   {
-    basename: '/apps/ssc',
+    basename: '/apps/insta',
   }
 );
 

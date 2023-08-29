@@ -5,7 +5,7 @@ const TsconfigPathsPlugin = require('tsconfig-paths-webpack-plugin');
 module.exports = {
   entry: {
     weather: './src/Weather/index.tsx',
-    ssc: './src/SteamShopClone/index.tsx',
+    instaclone: './src/Instaclone/index.tsx',
   },
   resolve: {
     extensions: ['.ts', '.tsx', '.js', '.jsx'],
@@ -38,8 +38,8 @@ module.exports = {
     }),
     new HtmlWebpackPlugin({
       template: './src/index.html',
-      chunks: ['ssc'],
-      filename: 'ssc.html'
+      chunks: ['instaclone'],
+      filename: 'instaclone.html'
     }),
   ],
 };
